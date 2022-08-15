@@ -3,10 +3,41 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1 id="welcomeMessage">しんが編集しました</h1>
+  <div class="container">
+   <div class="guage-wrap">
+    <h1>体力ゲージ</h1>
+    <div class="guage">
+      <!-- 体力ゲージが入ります -->
+      <div class="guage-residue">
+        <!-- 減ったゲージが入ります -->
+      </div>
+      <div class="guage-reduce">
+        <!-- 残りが入ります -->
+      </div>
+     </div>
+   </div>
+   <div class="weather-wrap">
+    <div class="temperature">
+      <p>現在の気温</p>
+      <p>26.6℃</p>
+    </div>
+    <div class="humidity">
+      <p>現在の湿度</p>
+      <p>61%</p>
+    </div>
+   </div>
+   <div class="button-wrap">
+    <button type="button" class="search">探す</button>
+    <button type="button" class="find">見つける</button>
+   </div>
+   <div class="access-profile">
+    <button type="button" class="profile-button">プロフィール</button>
+   </div>
+  </div>
 
   <script type="module">
     window.onload = async (event) => {
