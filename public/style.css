@@ -10,12 +10,25 @@ p {
   margin: 60px 60px;
 }
 
+button:hover {
+  opacity: 0.5;
+}
+
+
 .guage-wrap {
   margin: 0 auto;
 }
 
 .guage {
   display: flex;
+}
+
+.guage p {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-top: 10px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .guage-residue {
@@ -61,6 +74,10 @@ p {
   margin-right: 40px;
 }
 
+.weather-wrap p {
+  text-align: center;
+}
+
 .button-wrap {
   margin-top: 70px;
 }
@@ -70,7 +87,7 @@ p {
 }
 
 .profile-button {
-  width: 80%;
+  width: 90%;
   height: 50px;
   font-size: 1rem;
   border: 0px;
@@ -80,6 +97,3 @@ p {
   border-radius: 10px;
 }
 
-button:hover {
-  opacity: 0.5;
-}
