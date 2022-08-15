@@ -17,7 +17,7 @@ serve(async (req) => {
     return new Response("ハルトマン");
   }
 
-  if (req.method === "GET" && pathname === "/Life-gauge") {
+  if (req.method === "GET" && pathname === "/life-gauge") {
     if (gender == "man") {
       life -= old * (temp + humidity / 100) * 0.01;
     }
