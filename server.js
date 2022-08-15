@@ -18,7 +18,16 @@ serve(async (req) => {
   }
 
   if (req.method === "GET" && pathname === "/Life-gauge") {
-    life -= old * (temp + humidity / 100) * 0.01;
+    if (gender == "man") {
+      life -= old * (temp + humidity / 100) * 0.01;
+    }
+    else if (gender == "woman") {
+      life -= old * (temp + humidity / 100) * 0.015;
+    }
+    else if (gender == "other") {
+      life -= old * (temp + humidity / 100) * 0.012;
+    }
+
     return new Response(life);
   }
 
