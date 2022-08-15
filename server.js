@@ -6,6 +6,7 @@ serve(async (req) => {
 
   const maxlife = 100;
   let life = 100;
+  let gender = "man";
   let old = 20;
   let temp = 30;
   let humidity = 50;
