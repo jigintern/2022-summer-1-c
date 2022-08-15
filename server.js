@@ -9,6 +9,26 @@ serve(async (req) => {
     return new Response("たいがのテストテキスト");
   }
 
+  if (req.method === "GET" && pathname === "/location-information") {
+    navigator.geolocation.watchPosition( (position) => {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+      var accu = position.coords.accuracy;
+      
+      var txt = document.getElementById("txt");
+      txt.innerHTML = "緯度: " + lat + "<br>" 
+      + "経度: " + lng + "<br>"
+      + "精度: " + accu + "<br>";
+
+      return new Response(txt);
+
+    },(error) =>{
+    },{
+      enableHighAccuracy: true
+    });
+  }
+
+
   return serveDir(req, {
     fsRoot: "public",
     urlRoot: "",
