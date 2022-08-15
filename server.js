@@ -6,7 +6,7 @@ serve(async (req) => {
   console.log(pathname);
 
   if (req.method === "GET" && pathname === "/welcome-message") {
-    return new Response("ハルトマン(鈴木晴斗)");
+    return new Response("ハルトマン");
   }
 
   return serveDir(req, {
