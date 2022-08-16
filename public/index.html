@@ -74,6 +74,20 @@
       const para = document.querySelector("#lifeGauge");
       para.innerText = `${lifeGauge}%`;
     };
+
+    navigator.geolocation.watchPosition( (position) => {
+      const lat  = position.coords.latitude;            // 緯度を取得
+      const lng  = position.coords.longitude;           // 経度を取得
+      const accu = position.coords.accuracy;            // 緯度・経度の精度を取得
+      const txt = document.getElementById("txt");       // データを表示するdiv要素の取得
+      txt.innerHTML = "緯度: " + lat  + "<br>"
+                    + "経度: " + lng  + "<br>"
+                    + "精度: " + accu + "<br>";
+    }, (error) => {                                   // エラーについては未対応
+    }, {
+      enableHighAccuracy: true                        // 高精度で測定するオプション
+    });
+    
   </script>
 </body>
 
