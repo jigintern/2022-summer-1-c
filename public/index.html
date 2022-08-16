@@ -37,7 +37,7 @@
       </div>
       <div class="guage-life">
         <!-- 残りが入ります -->
-        <p>70％</p>
+        <p id="lifeGauge"></p>
       </div>
      </div>
    </div>
@@ -66,6 +66,14 @@
     window.onload = async (event) => {
       const response = await fetch("/welcome-message");
       document.querySelector("#welcomeMessage").innerText = await response.text();
+    };
+
+    window.onload = async (event) => {
+      const response = await fetch("/life-gauge");
+      const lifeGauge = await response.text();
+
+      const para = document.querySelector("#lifeGauge");
+      para.innerText = `${lifeGauge}%`;
     };
   </script>
 </body>
