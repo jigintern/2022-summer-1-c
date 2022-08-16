@@ -1,20 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 body {
   background-color: #fffffe;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
 }
 
 p {
   margin: 0;
   padding: 0;
 }
+
+ul {
+  list-style-type: none;
+}
+
+/* ヘッダー関連のスタイル */
+
+header {
+  height: 84px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.header-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 80px;
+}
+
+.header-title {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #094067;
+  align-items: center;
+}
+
+.header-title a {
+  color: #094067;
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.menu-ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-ul li {
+  margin-right: 15px;
+}
+
+.menu-login {
+  margin-left: 30px;
+}
+
+.signup-button {
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #3da9fc;
+  border: 0px;
+  width: 80px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.login-button {
+  color: #3da9fc;
+  font-weight: bold;
+  background-color: transparent;
+  width: 80px;
+  height: 40px;
+  border-radius: 100px;
+  border:2px solid #3da9fc;
+}
+
+/* ------------------------------------------------------ */
+
 .container {
-  margin: 60px 60px;
-}
-
-button:hover {
-  opacity: 0.5;
+  margin: 80px 80px;
 }
 
 
+/* 体力ゲージのスタイル */
 .guage-wrap {
   margin: 0 auto;
 }
@@ -38,32 +116,16 @@ button:hover {
   border-radius:20px 0px 0px 20px;
 }
 
-.guage-reduce {
+.guage-life {
   width: 70%;
   height: 50px;
   background-color: red;
   border-radius: 0px 20px 20px 0px;
 }
 
-.search,.find {
-  display: block;
-  width: 90%;
-  height: 50px;
-  margin-bottom: 30px;
-  border: 0px;
-  font-size: 1rem;
-  color: #ffffff;
-  font-weight: bold;
-}
+/* ---------------------------------------- */
 
-.find {
-  background-color: #3da9fc;
-}
-
-.search {
-  background-color: #90b4ce;
-}
-
+/* 気温情報のスタイル */
 .weather-wrap {
   display: flex;
   font-size: 1.5rem;
@@ -78,16 +140,46 @@ button:hover {
   text-align: center;
 }
 
+/* -------------------------------------- */
+
+
+/* アクセスボタン関連のスタイル */
 .button-wrap {
   margin-top: 70px;
 }
+
+.search,.find {
+  display: block;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 30px;
+  border: 0px;
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 10px;
+
+}
+
+.find {
+  background-color: #3da9fc;
+}
+
+.search {
+  background-color: #90b4ce;
+}
+
+button:hover {
+  opacity: 0.5;
+}
+
 
 .access-profile {
   margin-top: 80px;
 }
 
 .profile-button {
-  width: 90%;
+  width: 100%;
   height: 50px;
   font-size: 1rem;
   border: 0px;
