@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
+let reqCount = 1;
+
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
 
@@ -24,6 +26,7 @@ serve(async (req) => {
       life -= old * (temp + humidity / 100) * 0.012;
     }
 
+    reqCount++;
     return new Response(life);
   }
 
