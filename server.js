@@ -9,19 +9,6 @@ serve(async (req) => {
     return new Response("ハルトマン");
   }
 
-  if (req.method === "GET" && pathname === "/location-information") {
-    const pos = await getCurrentPosition();
-    console.log(pos.coords);
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-    const acc = position.coords.accuracy;
-
-    const txt = document.getElementById("txt"); // テスト用
-    txt.innerHTML = "緯度: " + lat + "<br>"   // 緯度
-                  + "経度: " + lng + "<br>"   // 経度
-                  + "精度: " + acc + "<br>"; // その精度
-  }
-
   const calcDistance = (lat1, lng1, lat2, lng2) => {
     const R = Math.PI / 180;
     lat1 *= R;
