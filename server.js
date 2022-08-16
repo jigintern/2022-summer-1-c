@@ -3,6 +3,11 @@ import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
 let reqCount = 1;
 
+// 任意の桁で切り捨て
+function orgFloor(value) {
+  return Math.floor(value * 10) / 10;
+}
+
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
 
@@ -27,7 +32,7 @@ serve(async (req) => {
     }
 
     reqCount++;
-    return new Response(life);
+    return new Response(orgFloor(life));
   }
 
   return serveDir(req, {
