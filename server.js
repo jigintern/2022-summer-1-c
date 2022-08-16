@@ -28,6 +28,11 @@ serve(async (req) => {
     });
   }
 
+  if (req.method === "GET" && pathname === "/temperature-humidity") {
+    const url = "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+  }
+ 
+
 
   return serveDir(req, {
     fsRoot: "public",
