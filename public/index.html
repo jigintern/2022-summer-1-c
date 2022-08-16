@@ -28,6 +28,13 @@
   <div class="container">
    <div class="guage-wrap">
     <h1>体力ゲージ</h1>
+
+    <!-- テストメッセージ -->
+    <p id="locate">位置情報</p><br>
+    <p id="now-time">現在の大まかな時刻</p><br>
+    <p id="url">観測データ</p><br>
+    <p id="temp-humid">近場の観測所の最新の気象データ</p><br>
+
     <div class="guage">
       <!-- 体力ゲージが入ります -->
       <div class="guage-residue">
@@ -78,16 +85,45 @@
     navigator.geolocation.watchPosition( (position) => {
       const lat  = position.coords.latitude;            // 緯度を取得
       const lng  = position.coords.longitude;           // 経度を取得
-      const accu = position.coords.accuracy;            // 緯度・経度の精度を取得
-      const txt = document.getElementById("txt");       // データを表示するdiv要素の取得
+      const accu = position.coords.accuracy;            // その精度を取得
+      const txt = document.getElementById("locate");    // データを表示するdiv要素の取得
       txt.innerHTML = "緯度: " + lat  + "<br>"
                     + "経度: " + lng  + "<br>"
                     + "精度: " + accu + "<br>";
-    }, (error) => {                                   // エラーについては未対応
-    }, {
-      enableHighAccuracy: true                        // 高精度で測定するオプション
+    }, (error) => {}, {                                 // エラー時の処理は未定
+      enableHighAccuracy: true                          // 高精度で測定するオプション
     });
     
+    const getNowTime = () => {
+      const nowTime = new Date();                                   // 現在の時刻を入手
+      if(nowTime.getMinutes() < 10){
+        nowTime.setHours((new Date()).getHours() -1);               // 最新の気象情報の時に調整
+        nowTime.setMinutes(50);
+      }else{
+        nowTime.setMinutes((new Date()).getMinutes() -10);          // 最新の気象情報の分に調整
+      }
+      return nowTime.getFullYear().toString()                       // 年
+           + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
+           + nowTime.getDate().toString().padStart(2, '0')          // 日
+           + nowTime.getHours().toString().padStart(2, '0')         // 時
+           + nowTime.getMinutes().toString().substr(0,1) + "0"      // 分（10分単位）
+           + "00";                                                  // 秒
+    }
+
+    const fetchAmedasInfo = async (nowTime) => {
+      const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
+      // const res = await fetch(url);
+      // const json = await res.json();
+      // return json;
+      return url;
+    }
+
+    
+
+    const nowTime = document.getElementById("now-time");
+    nowTime.innerHTML = getNowTime();
+    const latestURL = document.getElementById("url");
+    latestURL.innerHTML = await fetchAmedasInfo(nowTime);
   </script>
 </body>
 
