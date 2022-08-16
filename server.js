@@ -13,10 +13,6 @@ serve(async (req) => {
 
   console.log(pathname);
 
-  if (req.method === "GET" && pathname === "/welcome-message") {
-    return new Response("ハルトマン");
-  }
-
   if (req.method === "GET" && pathname === "/life-gauge") {
     if (gender == "man") {
       life -= old * (temp + humidity / 100) * 0.01;

@@ -22,7 +22,7 @@
       </div>
      </div>
    </div>
-   <meter id="lifeMeter" min="0" max="100" value="0" low="20" high="50" optimum="100"></meter>
+   <meter id="lifeMeter" min="0" max="100" value="80" low="20" high="50" optimum="100"></meter>
    <div class="weather-wrap">
     <div class="temperature">
       <p>現在の気温</p>
@@ -44,16 +44,14 @@
 
   <script type="module">
     window.onload = async (event) => {
-      const response = await fetch("/welcome-message");
-      document.querySelector("#welcomeMessage").innerText = await response.text();
-    };
+      const para = document.querySelector("#lifeGauge");
+      const meter = document.querySelector("#lifeMeter");
 
-    window.onload = async (event) => {
       const response = await fetch("/life-gauge");
       const lifeGauge = await response.text();
 
-      const para = document.querySelector("#lifeGauge");
       para.innerText = `${lifeGauge}%`;
+      meter.value = lifeGauge;
     };
   </script>
 </body>
