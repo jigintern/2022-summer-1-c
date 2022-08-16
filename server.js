@@ -6,7 +6,7 @@ serve(async (req) => {
   console.log(pathname);
 
   if (req.method === "GET" && pathname === "/welcome-message") {
-    return new Response("たいがのテストテキスト");
+    return new Response("ハルトマン");
   }
 
   if (req.method === "GET" && pathname === "/location-information") {
