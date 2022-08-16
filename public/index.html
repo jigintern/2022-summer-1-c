@@ -49,7 +49,7 @@
 
     window.onload = async (event) => {
       const response = await fetch("/life-gauge");
-      document.querySelector("lifeGauge").innerText = await response.text();
+      document.querySelector("#lifeGauge").innerText = await response.text();
     };
   </script>
 </body>
