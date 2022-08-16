@@ -18,7 +18,7 @@
       </div>
       <div class="guage-reduce">
         <!-- 残りが入ります -->
-        <p id="lifeGauge"></p>
+        <p id="lifeGauge">70%</p>
       </div>
      </div>
    </div>
@@ -47,11 +47,17 @@
       const para = document.querySelector("#lifeGauge");
       const meter = document.querySelector("#lifeMeter");
 
-      const response = await fetch("/life-gauge");
-      const lifeGauge = await response.text();
+      console.log("test");
 
-      para.innerText = `${lifeGauge}%`;
-      meter.value = lifeGauge;
+      var id = setInterval(async function(){
+        const response = await fetch("/life-gauge");
+        const life = await response.text();
+
+        para.innerText = `${life}%`;
+        meter.value = life;
+        console.log(life);
+        console.log("test");
+      }, 5000);
     };
   </script>
 </body>
