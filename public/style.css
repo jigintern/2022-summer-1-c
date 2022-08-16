@@ -1,0 +1,99 @@
+body {
+  background-color: #fffffe;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin: 60px 60px;
+}
+
+button:hover {
+  opacity: 0.5;
+}
+
+
+.guage-wrap {
+  margin: 0 auto;
+}
+
+.guage {
+  display: flex;
+}
+
+.guage p {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-top: 10px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.guage-residue {
+  width: 30%;
+  height: 50px;
+  background-color: blue;
+  border-radius:20px 0px 0px 20px;
+}
+
+.guage-reduce {
+  width: 70%;
+  height: 50px;
+  background-color: red;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.search,.find {
+  display: block;
+  width: 90%;
+  height: 50px;
+  margin-bottom: 30px;
+  border: 0px;
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.find {
+  background-color: #3da9fc;
+}
+
+.search {
+  background-color: #90b4ce;
+}
+
+.weather-wrap {
+  display: flex;
+  font-size: 1.5rem;
+  margin: 40px 0;
+}
+
+.temperature {
+  margin-right: 40px;
+}
+
+.weather-wrap p {
+  text-align: center;
+}
+
+.button-wrap {
+  margin-top: 70px;
+}
+
+.access-profile {
+  margin-top: 80px;
+}
+
+.profile-button {
+  width: 90%;
+  height: 50px;
+  font-size: 1rem;
+  border: 0px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #3da9fc;
+  border-radius: 10px;
+}
+
