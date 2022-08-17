@@ -25,29 +25,88 @@
         </ul>
       </div>
     </div>
-   </header>
+  </header>
   <div class="container">
-   <div class="guage-wrap">
-    <h1>体力ゲージ</h1>
-    <div class="guage">
-      <!-- 体力ゲージが入ります -->
-      <div class="guage-residue">
-        <!-- 減ったゲージが入ります -->
-        <p>30％</p>
+    <div class="guage-wrap">
+      <h1>体力ゲージ</h1>
+      <div class="guage">
+        <meter id="lifeMeter" min="0" max="100" value="100" low="20" high="50" optimum="100"></meter>
       </div>
-      <div class="guage-life">
-        <!-- 残りが入ります -->
-        <p>70％</p>
+      <div class="lifePoint">
+        <p><span id="lifeGauge">100%</span> / 100%</p>
       </div>
-     </div>
+    </div>
+  </div>
      <div class="content-wrap">
       <h1>自動販売機を見つけよう！</h1>
       <img src="image/sampleMap.png" alt="サンプルマップ" srcset="">
      </div>
-
    </div>
+  <script type="module">
+          window.onload = async (event) => {
+      const para = document.querySelector("#lifeGauge");
+      const meter = document.querySelector("#lifeMeter");
 
+      console.log("test");
 
+      var id = setInterval(async function(){
+        const response = await fetch("/life-gauge");
+        const life = await response.text();
+
+        para.innerText = `${life}%`;
+        meter.value = life;
+
+        // 体力が50を切ったら通知
+        if(life < 50 && attentionNotice == 0) {
+          notifyMe("attention");
+          attentionNotice++;
+        }
+
+        // 体力が20を切ったら通知
+        if(life < 20 && warningNotice == 0) {
+          notifyMe("warning");
+          warningNotice++;
+        }
+
+        // 体力が0になったとき通知
+        if(life <= 0 && overNotice == 0) {
+          notifyMe("over");
+          overNotice++;
+        }
+
+        console.log(attentionNotice);
+        console.log(warningNotice);
+        console.log(overNotice);
+        console.log(life);
+        console.log("test");
+      }, 5000);
+    };
+  </script>
+  <!-- 体力通知 -->
+  <script>
+    function notifyMe(stateName) {
+      // 通知許可の確認
+      Notification.requestPermission();
+
+      // 状態によって通知内容を変える
+      if(stateName === "attention") {
+        const notification = new Notification("体力が50%をきりました");
+      }
+      else if(stateName === "warning") {
+        const notification = new Notification("体力が20%をきりました");
+      }
+      else if(stateName === "over") {
+        const notification = new Notification("体力が0%になりました");
+      }
+    }
+  </script>
+  <!-- 通知回数 -->
+  <script>
+      let safeNotice = 0;
+      let attentionNotice = 0;
+      let warningNotice = 0;
+      let overNotice = 0;
+  </script>
 </body>
 
 </html>
