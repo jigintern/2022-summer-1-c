@@ -31,6 +31,7 @@
 
     <!-- テストメッセージ -->
     <p id="locate">位置情報</p><br>
+    <p id="testNum">ポストテスト</p>
     <a id="url" href="https://www.jma.go.jp/bosai/amedas">アメダスの気象データ</a><br>
     <p id="temp-humid">近場の観測所の最新の気象データ</p><br>
 
@@ -81,36 +82,39 @@
       para.innerText = `${lifeGauge}%`;
     };
 
-    navigator.geolocation.watchPosition( (position) => {
-      const lat  = position.coords.latitude;            // 緯度を取得
-      const lng  = position.coords.longitude;           // 経度を取得
-      const accu = position.coords.accuracy;            // その精度を取得
-      const txt = document.getElementById("locate");    // データを表示するdiv要素の取得
-      txt.innerHTML = "緯度: " + lat  + "<br>"
-                    + "経度: " + lng  + "<br>"
-                    + "精度: " + accu + "<br>";
-    }, (error) => {}, {                                 // エラー時の処理は未定
-      enableHighAccuracy: true                          // 高精度で測定するオプション
-    });
-    
-    const getCurrentPTH = () => {
-      // 現在時刻を得て、最新の気象データの時刻に調整
-      const getNowTime = () => {
-        const nowTime = new Date();                                   // 現在の時刻を入手
-        if(nowTime.getMinutes() < 10){                                // 最新のアメダスデータ時刻に調整
-          nowTime.setHours((new Date()).getHours() -1);
-          nowTime.setMinutes(40);
-        }else{
-          nowTime.setMinutes((new Date()).getMinutes() -20);
-        }
-        return nowTime.getFullYear().toString()                       // 年
-             + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
-             + nowTime.getDate().toString().padStart(2, '0')          // 日
-             + nowTime.getHours().toString().padStart(2, '0')         // 時
-             + nowTime.getMinutes().toString().substr(0,1) + "0"      // 分（10分単位）
-             + "00";                                                  // 秒
-      }
+    const getCurrentPosition = () => {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+    };
 
+    window.onload = async (event) => {
+      let lat;
+      let lng;
+      let accu;
+      try{
+        const position = getCurrentPosition();
+        console.log(position.coords);
+        lat  = position.coords.latitude;              // 緯度を取得
+        lng  = position.coords.longitude;             // 経度を取得
+        accu = position.coords.accuracy;              // その精度を取得
+      } catch(e) {
+        console.log(e);
+        lat = 40;                                     // ダミーデータ
+        lng = 140;
+        accu = 0;
+      } finally{
+        const response = await fetch("/temp-humid", { // server.jsに位置情報を送信
+          method: "POST",
+          headers: { "Content-Type" : "application/json" },
+          body: JSON.stringify({"lat": lat ,"lng": lng})
+        });
+        const testNum = await response.text();
+        const para = document.querySelector("#testNum");
+        para.innerText = `テスト：${testNum}`;
+      }
+    }
+    const getCurrentPTH = () => {
       // 最新のアメダス気象jsonファイルを取得
       const fetchAmedasInfo = async(nowTime) => {
         const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
@@ -160,7 +164,7 @@
       const amedasObs = fetchAmedasObs();
 
     }
-    getCurrentPTH();
+    getCurrentPTH();  // 実行
 
   </script>
 </body>
