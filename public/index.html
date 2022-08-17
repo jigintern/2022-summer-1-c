@@ -53,9 +53,6 @@
     <button type="button" onclick="location.href='profile.html'" class="profile-button">プロフィール</button>
    </div>
   </div>
-
-
-
   <script type="module">
     window.onload = async (event) => {
       const para = document.querySelector("#lifeGauge");
@@ -70,21 +67,47 @@
         para.innerText = `${life}%`;
         meter.value = life;
 
-        if(life <= 0) {
+        // 体力が50を切ったら通知
+        if(life < 50 && attentionNotice == 0) {
           notifyMe();
-          clearInterval(id);
-          return;
+          attentionNotice++;
         }
+
+        // 体力が20を切ったら通知
+        if(life < 20 && warningNotice == 0) {
+          notifyMe();
+          warningNotice++;
+        }
+
+        // 体力が0になったとき通知
+        if(life <= 0 && overNotice == 0) {
+          notifyMe();
+          overNotice++;
+        }
+
+        console.log(attentionNotice);
+        console.log(warningNotice);
+        console.log(overNotice);
         console.log(life);
         console.log("test");
       }, 2000);
     };
   </script>
+
+  <!-- 体力通知 -->
   <script>
     function notifyMe() {
       Notification.requestPermission();
       const notification = new Notification("Hello!");
     }
+  </script>
+
+  <!-- 通知回数 -->
+  <script>
+      let safeNotice = 0;
+      let attentionNotice = 0;
+      let warningNotice = 0;
+      let overNotice = 0;
   </script>
 </body>
 
