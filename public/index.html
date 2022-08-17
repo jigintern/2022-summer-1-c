@@ -114,20 +114,6 @@
         para.innerText = `テスト：${testNum}`;
       }
     }
-    const getCurrentPTH = () => {
-
-
-
-      // 観測地点と現在地の距離を作成し、最短地点を返す(制作中)
-      const calcDistance = (lat, lng, json) => {
-        Object.keys(json).map( key => {
-          distance(lat, lng, json[key].lat, json[key].lng);
-        });
-      }
-
-
-    }
-    getCurrentPTH();  // 実行
 
   </script>
 </body>
