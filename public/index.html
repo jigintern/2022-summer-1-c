@@ -69,19 +69,19 @@
 
         // 体力が50を切ったら通知
         if(life < 50 && attentionNotice == 0) {
-          notifyMe();
+          notifyMe("attention");
           attentionNotice++;
         }
 
         // 体力が20を切ったら通知
         if(life < 20 && warningNotice == 0) {
-          notifyMe();
+          notifyMe("warning");
           warningNotice++;
         }
 
         // 体力が0になったとき通知
         if(life <= 0 && overNotice == 0) {
-          notifyMe();
+          notifyMe("over");
           overNotice++;
         }
 
@@ -96,9 +96,20 @@
 
   <!-- 体力通知 -->
   <script>
-    function notifyMe() {
+    function notifyMe(stateName) {
+      // 通知許可の確認
       Notification.requestPermission();
-      const notification = new Notification("Hello!");
+
+      // 状態によって通知内容を変える
+      if(stateName === "attention") {
+        const notification = new Notification("体力が50%をきりました");
+      }
+      else if(stateName === "warning") {
+        const notification = new Notification("体力が20%をきりました");
+      }
+      else if(stateName === "over") {
+        const notification = new Notification("体力が0%になりました");
+      }
     }
   </script>
 
