@@ -50,11 +50,11 @@
    <div class="weather-wrap">
     <div class="temperature">
       <p>現在の気温</p>
-      <p>26.6℃</p>
+      <p id = "nowTemp">--.-℃</p>
     </div>
     <div class="humidity">
       <p>現在の湿度</p>
-      <p>61%</p>
+      <p id = "nowHumidity">--%</p>
     </div>
    </div>
    <div class="button-wrap">
@@ -109,9 +109,13 @@
           headers: { "Content-Type" : "application/json" },
           body: JSON.stringify({"lat": lat ,"lng": lng})
         });
-        const testNum = await response.text();
-        const para = document.querySelector("#testNum");
-        para.innerText = `テスト：${testNum}`;
+        console.log("test");
+        const nowInfo = await response.json();
+        console.log(nowInfo.temp);
+        const temp = document.querySelector("#nowTemp");
+        temp.innerText = `${nowInfo.temp[0]}℃`;
+        const humidity = document.querySelector("#nowHumidity");
+        humidity.innerText = `${nowInfo.humidity[0]}%`
       }
     }
 
