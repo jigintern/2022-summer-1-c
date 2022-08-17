@@ -116,10 +116,8 @@ meter {
 
 .lifePoint {
   display: flex;
-}
-
-.lifePoint p {
-  text-align: center;
+  justify-content: end;
+  font-weight: bold;
 }
 
 .residue {

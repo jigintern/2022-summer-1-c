@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/form.css">
+</head>
+
+<body>
+  <header>
+    <div class="header-wrap">
+      <div class="header-title">
+        <p><a href="index.html">水分補給チェッカー</a></p>
+      </div>
+      <div class="header-menu">
+        <ul class="menu-ul menu-login">
+          <li><button class="signup-button" onclick="location.href='signup-form.html'">新規登録</button></li>
+          <li><button class="login-button" onclick="location.href='login-form.html'">ログイン</button></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="form-wrap">
+      <div class="form-title">
+        <h1>アカウント登録</h1>
+        <p>基本情報を入力してください。</p>
+      </div>
+      <form class="input-wrap" style="margin-left: 15%;">
+        <p>ユーザー名　<span>必須</span></p>
+        <input type="text" class="text-input"  required>
+        <p>パスワード <span>必須</span></p>
+        <input type="text" class="text-input" required>
+        <p>パスワード（確認）<span>必須</span></p>
+        <input type="text" class="text-input" required>
+        <p>年齢　<span>必須</span></p>
+        <div class="cp_ipselect cp_sl01">
+          <select name="age">
+            <script>
+            var i;
+            for(i=5; i<100; i++){
+            document.write('<option value="'+i+'">'+i+'歳</option>');
+            }
+            </script>
+          </select>
+        </div>
+        <p>性別　<span>必須</span></p>
+        <div class="gender-class">
+          <input type="radio" name="gender" value="men"checked/>男性
+        </div>
+        <div class="gender-class">
+          <input type="radio" name="gender" value="women"/>女性<br>
+        </div>
+        <div class="submit-button">
+          <input type="submit" value="登録" class="form-signup-button">
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <script type="module">
+    window.onload = async (event) => {
+      const response = await fetch("/welcome-message");
+      document.querySelector("#welcomeMessage").innerText = await response.text();
+    };
+
+    window.onload = async (event) => {
+      const response = await fetch("/life-gauge");
+      const lifeGauge = await response.text();
+
+      const para = document.querySelector("#lifeGauge");
+      para.innerText = `${lifeGauge}%`;
+    };
+  </script>
+</body>
+
+</html>
