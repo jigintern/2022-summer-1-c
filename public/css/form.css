@@ -5,8 +5,17 @@
   text-align: center;
 }
 
+.input-wrap p {
+  margin-top: 30px;
+}
+
 form {
   width: 80%;
+}
+
+.submit-button {
+  text-align: center;
+  margin-right: 10%;
 }
 
 .text-input {
@@ -28,6 +37,7 @@ form span {
 
 form p {
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .form-signup-button {
@@ -35,7 +45,7 @@ form p {
   font-weight: bold;
   background-color: #3da9fc;
   border: 0px;
-  width: 80px;
+  width: 100px;
   height: 40px;
   border-radius: 100px;
 }

@@ -28,7 +28,7 @@
         <h1>アカウント登録</h1>
         <p>基本情報を入力してください。</p>
       </div>
-      <form>
+      <form class="input-wrap" style="margin-left: 15%;">
         <p>ユーザー名　<span>必須</span></p>
         <input type="text" class="text-input"  required>
         <p>パスワード <span>必須</span></p>
@@ -38,9 +38,11 @@
         <p>年齢　<span>必須</span></p>
         <input type="text" class="text-input" required>
         <p>性別　<span>必須</span></p>
-        <input type="radio" name="gender" value="male" checked/>男性
-        <input type="radio" name="gender" value="male"/>女性<br>
-        <input type="submit" value="登録" class="form-signup-button">
+        <input type="radio" name="gender" value="men" checked/>男性
+        <input type="radio" name="gender" value="women"/>女性<br>
+        <div class="submit-button">
+          <input type="submit" value="登録" class="form-signup-button">
+        </div>
       </form>
     </div>
   </div>
