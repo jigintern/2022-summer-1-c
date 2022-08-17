@@ -123,23 +123,6 @@
         return json;
       }
 
-      // アメダスの観測地点jsonファイルを取得
-      const fetchAmedasObs = async () => {
-        const url = "https://www.jma.go.jp/bosai/amedas/const/amedastable.json";
-        const res = await fetch(url);
-        const json = await res.json();
-
-        // jsonのテコ入れ。各地点の経度・緯度それぞれに行う。
-        // 元のデータ："lat":[a, b]
-        // 修正後　　："lat":[c = a+b/60, b(No Use)]
-        // 意味　　　：a度b分 → c度
-        Object.keys(json).map( key => {
-          const amedas = json[key];
-          json[key].lat = amedas.lat[0] + (amedas.lat[1] / 60);
-          json[key].lon = amedas.lon[0] + (amedas.lon[1] / 60);
-        });
-        return json;
-      }
 
       // 球面2点間の距離を求める（https://ja.wikipedia.org/wiki/大円距離 参照）
       const distance = (lat1, lng1, lat2, lng2) => {
@@ -159,7 +142,6 @@
         });
       }
 
-      const amedasObs = fetchAmedasObs();
 
     }
     getCurrentPTH();  // 実行
