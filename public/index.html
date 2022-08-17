@@ -28,13 +28,6 @@
   <div class="container">
    <div class="guage-wrap">
     <h1>体力ゲージ</h1>
-
-    <!-- テストメッセージ -->
-    <p id="locate">位置情報</p><br>
-    <p id="testNum">ポストテスト</p>
-    <a id="url" href="https://www.jma.go.jp/bosai/amedas">アメダスの気象データ</a><br>
-    <p id="temp-humid">近場の観測所の最新の気象データ</p><br>
-
     <div class="guage">
       <!-- 体力ゲージが入ります -->
       <div class="guage-residue">
@@ -89,29 +82,25 @@
     };
 
     window.onload = async (event) => {
-      let lat;
-      let lng;
-      let accu;
+      let lat, lon, accu;
       try{
-        const position = await getCurrentPosition();
+        const position = await getCurrentPosition();  // 位置情報の取得を試行
         console.log(position.coords);
         lat  = position.coords.latitude;              // 緯度を取得
-        lng  = position.coords.longitude;             // 経度を取得
+        lon  = position.coords.longitude;             // 経度を取得
         accu = position.coords.accuracy;              // その精度を取得
       } catch(e) {
         console.log(e);
         lat = 40;                                     // ダミーデータ
-        lng = 140;
+        lon = 140;
         accu = 0;
       } finally{
-        const response = await fetch("/temp-humid", { // server.jsに位置情報を送信
+        const response = await fetch("/temp-humid", {             // server.jsに位置情報を送信
           method: "POST",
           headers: { "Content-Type" : "application/json" },
-          body: JSON.stringify({"lat": lat ,"lng": lng})
+          body: JSON.stringify({"lat": lat ,"lon": lon})
         });
-        console.log("test");
-        const nowInfo = await response.json();
-        console.log(nowInfo.temp);
+        const nowInfo = await response.json();                    // 位置情報を元に得た気象情報を受け取る
         const temp = document.querySelector("#nowTemp");
         temp.innerText = `${nowInfo.temp[0]}℃`;
         const humidity = document.querySelector("#nowHumidity");
