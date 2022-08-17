@@ -93,7 +93,7 @@
       let lng;
       let accu;
       try{
-        const position = getCurrentPosition();
+        const position = await getCurrentPosition();
         console.log(position.coords);
         lat  = position.coords.latitude;              // 緯度を取得
         lng  = position.coords.longitude;             // 経度を取得
