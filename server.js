@@ -44,7 +44,7 @@ serve(async (req) => {
 
       // jsonのテコ入れ。各地点の経度・緯度それぞれに行う。
       // 元のデータ："lat":[a, b]
-      // 修正後　　："lat":[c = a+b/60, b(No Use)]
+      // 修正後　　："lat":c = a+b/60
       // 意味　　　：a度b分 → c度
       Object.keys(json).map( key => {
         const amedas = json[key];
