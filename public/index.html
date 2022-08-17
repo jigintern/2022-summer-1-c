@@ -28,12 +28,15 @@
   <div class="container">
    <div class="guage-wrap">
     <h1>体力ゲージ</h1>
+<<<<<<< HEAD
 
     <!-- テストメッセージ -->
     <p id="locate">位置情報</p><br>
     <a id="url" href="https://www.jma.go.jp/bosai/amedas">アメダスの気象データ</a><br>
     <p id="temp-humid">近場の観測所の最新の気象データ</p><br>
 
+=======
+>>>>>>> parent of e730c9a (Update index.html)
     <div class="guage">
       <!-- 体力ゲージが入ります -->
       <div class="guage-residue">
@@ -84,15 +87,17 @@
     navigator.geolocation.watchPosition( (position) => {
       const lat  = position.coords.latitude;            // 緯度を取得
       const lng  = position.coords.longitude;           // 経度を取得
-      const accu = position.coords.accuracy;            // その精度を取得
-      const txt = document.getElementById("locate");    // データを表示するdiv要素の取得
+      const accu = position.coords.accuracy;            // 緯度・経度の精度を取得
+      const txt = document.getElementById("txt");       // データを表示するdiv要素の取得
       txt.innerHTML = "緯度: " + lat  + "<br>"
                     + "経度: " + lng  + "<br>"
                     + "精度: " + accu + "<br>";
-    }, (error) => {}, {                                 // エラー時の処理は未定
-      enableHighAccuracy: true                          // 高精度で測定するオプション
+    }, (error) => {                                   // エラーについては未対応
+    }, {
+      enableHighAccuracy: true                        // 高精度で測定するオプション
     });
     
+<<<<<<< HEAD
     const getCurrentPTH = () => {
       // 現在時刻を得て、最新の気象データの時刻に調整
       const getNowTime = () => {
@@ -156,6 +161,8 @@
     
     getCurrentPTH();
 
+=======
+>>>>>>> parent of e730c9a (Update index.html)
   </script>
 </body>
 
