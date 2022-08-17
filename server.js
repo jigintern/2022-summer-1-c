@@ -54,7 +54,24 @@ serve(async (req) => {
       return json;
     }
 
+    // 球面2点間の距離を求める（https://ja.wikipedia.org/wiki/大円距離 参照）
+    const distance = (lat1, lng1, lat2, lng2) => {
+      const r = 6371000;  // 地球半径
+      const toRadian = Math.PI / 180;
+      lat1 *= toRadian;
+      lng1 *= toRadian;
+      lat2 *= toRadian;
+      lng2 *= toRadian;
+      return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lng1-lng2)) );
+    }
+
     const amedasObs = await fetchAmedasObs();
+    console.log(lat);
+    console.log(lng);
+    console.log(amedasObs["11001"].lat);
+    console.log(amedasObs["11001"].lon);
+    const testDistance = distance(lat, lng, amedasObs["11001"].lat, amedasObs["11001"].lon);
+    console.log(testDistance);
 
     // 最短の観測所を求める予定
 
@@ -79,7 +96,6 @@ serve(async (req) => {
       const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
       const res = await fetch(url);
       const json = await res.json();
-      console.log(json["11001"].temp);
       return json;
     }
 
