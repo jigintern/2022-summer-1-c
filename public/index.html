@@ -67,12 +67,39 @@
         const response = await fetch("/life-gauge");
         const life = await response.text();
 
+        if(life <= 0) {
+          notifyMe();
+        }
+
         para.innerText = `${life}%`;
         meter.value = life;
         console.log(life);
         console.log("test");
-      }, 5000);
+      }, 2000);
     };
+  </script>
+  <script>
+    function notifyMe() {
+      if(!("Notification" in window)) {
+        alert("このブラウザはデスクトップ通知に対応していません");
+      }
+
+      // 通知の許可チェック
+      // ある場合
+      if(Notification.permission === "granted") {
+        let notification = new Notification("Hello!");
+      }
+
+      //ない場合
+      else if(Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+          // ユーザーが許可した場合
+          if(permission === "granted") {
+            let notification = new Notification("Hello!");
+          }
+        });
+      }
+    }
   </script>
 </body>
 
