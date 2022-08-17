@@ -115,13 +115,6 @@
       }
     }
     const getCurrentPTH = () => {
-      // 最新のアメダス気象jsonファイルを取得
-      const fetchAmedasInfo = async(nowTime) => {
-        const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
-        const res = await fetch(url);
-        const json = await res.json();
-        return json;
-      }
 
 
       // 球面2点間の距離を求める（https://ja.wikipedia.org/wiki/大円距離 参照）
