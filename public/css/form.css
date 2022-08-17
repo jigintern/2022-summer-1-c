@@ -21,7 +21,7 @@ form {
 .text-input {
   width: 80%;
   height: 48px;
-  border: 2px solid #eceaec;
+  border: 2px solid skyblue;
   border-radius: 5px;
   margin-bottom: 8px;
   padding:0 16px;
@@ -48,4 +48,65 @@ form p {
   width: 100px;
   height: 40px;
   border-radius: 100px;
+  margin-top: 40px;
+}
+
+.gender-class {
+  font-size: 1rem;
+  margin-right: 30px;
+  display: inline-block;
+}
+
+/* セレクトボックス関連のスタイル */
+.cp_ipselect {
+  overflow: hidden;
+  width: 90%;
+  margin: 2em auto;
+  text-align: center;
+
+}
+.cp_ipselect select {
+  width: 100%;
+  padding-right: 1em;
+  cursor: pointer;
+  text-indent: 0.01px;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+    display: none;
+}
+.cp_ipselect.cp_sl01 {
+  position: relative;
+  border-radius: 2px;
+  border: 2px solid skyblue;
+  border-radius: 50px;
+  background: #ffffff;
+  margin: 0px;
+  width: 80%;
+  height: 48px;
+}
+.cp_ipselect.cp_sl01::before {
+  position: absolute;
+  top: 1.25em;
+  right: 0.8em;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid skyblue;
+  pointer-events: none;
+}
+.cp_ipselect.cp_sl01 select {
+  padding: 16px 4px 8px 20px;
+  color: black;
+  font-size: 1rem;
 }
