@@ -118,7 +118,7 @@ serve(async (req) => {
     if(nowInfo.temp === undefined)nowInfo.temp = [20.0, 0];
     if(nowInfo.humidity === undefined)nowInfo.humidity = [50.0, 0];
     console.log(nowInfo);
-    return new Response(nowInfo);
+    return new Response(JSON.stringify(nowInfo));
   }
 
   return serveDir(req, {
