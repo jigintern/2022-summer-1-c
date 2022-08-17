@@ -32,9 +32,9 @@ serve(async (req) => {
   }
 
   if(req.method === "POST" && pathname === "/temp-humid") {
-    const requestJson = await req.json();   // json{lat, lng}を受け取る
+    const requestJson = await req.json();   // json{lat, lon}を受け取る
     const lat = requestJson.lat;
-    const lng = requestJson.lng;
+    const lon = requestJson.lon;
 
     // アメダスの観測地点jsonファイルを取得
     const fetchAmedasObs = async () => {
@@ -55,23 +55,21 @@ serve(async (req) => {
     }
 
     // 球面2点間の距離を求める（https://ja.wikipedia.org/wiki/大円距離 参照）
-    const distance = (lat1, lng1, lat2, lng2) => {
+    const distance = (lat1, lon1, lat2, lon2) => {
       const r = 6371000;  // 地球半径
       const toRadian = Math.PI / 180;
       lat1 *= toRadian;
-      lng1 *= toRadian;
+      lon1 *= toRadian;
       lat2 *= toRadian;
-      lng2 *= toRadian;
-      return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lng1-lng2)) );
+      lon2 *= toRadian;
+      return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lon1-lon2)) );
     }
 
-    const getNearistID = (lat, lng, json) => {
-      let nearistDistance = 6371000 * Math.PI; // 球面2点間の最大距離を初期値に
-      let checkObs;
-      let nearistID;
-      Object.keys(json).map( key => {
-        checkObs = distance(lat, lng, json[key].lat, json[key].lon);  //jsonの経度はlngではなくlon
-        
+    const getNearistID = (lat, lon, json) => {
+      let nearistDistance = 6371000 * Math.PI;                        // 球面2点間の最大距離を初期値に
+      let checkObs, nearistID;
+      Object.keys(json).map( key => {                                 // 要約：各観測地点に対して距離を出している
+        checkObs = distance(lat, lon, json[key].lat, json[key].lon);
         if(nearistDistance > checkObs){
           nearistDistance = checkObs;
           nearistID = key;
@@ -79,13 +77,6 @@ serve(async (req) => {
       });
       return nearistID;
     }
-
-    const amedasObs = await fetchAmedasObs();
-    const nearistObs = getNearistID(lat,lng,amedasObs);
-    console.log(nearistObs);
-
-
-    // 最短の観測所を求める予定
 
     const getNowTime = () => {
       const nowTime = new Date();                                   // 現在の時刻を入手
@@ -106,18 +97,24 @@ serve(async (req) => {
     // 最新のアメダス気象jsonファイルを取得
     const fetchAmedasInfo = async(nowTime) => {
       const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
-      console.log(url);
+      console.log(`最新の気象：${url}`);
       const res = await fetch(url);
       const json = await res.json();
       return json;
     }
 
+    // それぞれの関数を実行
+    const amedasObs = await fetchAmedasObs();
+    const nearistID = getNearistID(lat,lon,amedasObs);
+    console.log(`観測所ID：${nearistID}`);
+    console.log(`観測所地名：${amedasObs[nearistID].kjName}`);
     const nowTime = getNowTime();
     const amedasInfo = await fetchAmedasInfo(nowTime);
-    const nowInfo = { "temp": amedasInfo[nearistObs].temp, "humidity": amedasInfo[nearistObs].humidity};
+    const nowInfo = { "temp": amedasInfo[nearistID].temp, 
+                      "humidity": amedasInfo[nearistID].humidity};
     if(nowInfo.temp === undefined)nowInfo.temp = [20.0, 0];
     if(nowInfo.humidity === undefined)nowInfo.humidity = [50.0, 0];
-    console.log(nowInfo);
+    console.log(`気象情報：${JSON.stringify(nowInfo)}`);
     return new Response(JSON.stringify(nowInfo));
   }
 
