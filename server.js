@@ -31,6 +31,34 @@ serve(async (req) => {
     return new Response(life);
   }
 
+  if(req.method === "POST" && pathname === "/temp-humid") {
+    const requestJson = await req.json();
+    const lat = requestJson.lat;
+    const lng = requestJson.lng;
+
+    // 最短の観測所を求める予定
+
+    const getNowTime = () => {
+      const nowTime = new Date();                                   // 現在の時刻を入手
+      if(nowTime.getMinutes() < 10){                                // 最新のアメダスデータ時刻に調整
+        nowTime.setHours((new Date()).getHours() -1);
+        nowTime.setMinutes(40);
+      }else{
+        nowTime.setMinutes((new Date()).getMinutes() -20);
+      }
+      return nowTime.getFullYear().toString()                       // 年
+           + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
+           + nowTime.getDate().toString().padStart(2, '0')          // 日
+           + nowTime.getHours().toString().padStart(2, '0')         // 時
+           + nowTime.getMinutes().toString().substr(0,1) + "0"      // 分（10分単位）
+           + "00";                                                  // 秒
+    }
+
+
+    const txt = "test";
+    return new Response(txt); // 適当に文字列を返しておく
+  }
+
   return serveDir(req, {
     fsRoot: "public",
     urlRoot: "",
