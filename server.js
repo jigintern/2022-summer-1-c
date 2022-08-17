@@ -74,6 +74,18 @@ serve(async (req) => {
            + "00";                                                  // 秒
     }
 
+    // 最新のアメダス気象jsonファイルを取得
+    const fetchAmedasInfo = async(nowTime) => {
+      const url = "https://www.jma.go.jp/bosai/amedas/data/map/" + nowTime + ".json";
+      const res = await fetch(url);
+      const json = await res.json();
+      console.log(json["11001"].temp);
+      return json;
+    }
+
+    const nowTime = getNowTime();
+    const amedasInfo = await fetchAmedasInfo(nowTime);
+
     const txt = "test";
     return new Response(txt); // 適当に文字列を返しておく
   }
