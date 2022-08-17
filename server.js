@@ -32,9 +32,29 @@ serve(async (req) => {
   }
 
   if(req.method === "POST" && pathname === "/temp-humid") {
-    const requestJson = await req.json();
+    const requestJson = await req.json();   // json{lat, lng}を受け取る
     const lat = requestJson.lat;
     const lng = requestJson.lng;
+
+    // アメダスの観測地点jsonファイルを取得
+    const fetchAmedasObs = async () => {
+      const url = "https://www.jma.go.jp/bosai/amedas/const/amedastable.json";
+      const res = await fetch(url);
+      const json = await res.json();
+
+      // jsonのテコ入れ。各地点の経度・緯度それぞれに行う。
+      // 元のデータ："lat":[a, b]
+      // 修正後　　："lat":[c = a+b/60, b(No Use)]
+      // 意味　　　：a度b分 → c度
+      Object.keys(json).map( key => {
+        const amedas = json[key];
+        json[key].lat = amedas.lat[0] + (amedas.lat[1] / 60);
+        json[key].lon = amedas.lon[0] + (amedas.lon[1] / 60);
+      });
+      return json;
+    }
+
+    const amedasObs = await fetchAmedasObs();
 
     // 最短の観測所を求める予定
 
@@ -53,7 +73,6 @@ serve(async (req) => {
            + nowTime.getMinutes().toString().substr(0,1) + "0"      // 分（10分単位）
            + "00";                                                  // 秒
     }
-
 
     const txt = "test";
     return new Response(txt); // 適当に文字列を返しておく
