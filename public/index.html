@@ -22,7 +22,7 @@
         <ul class="menu-ul menu-login">
           <li><button class="signup-button" onclick="location.href='signup-form.html'">新規登録</button></li>
           <li><button class="login-button" onclick="location.href='login-form.html'">ログイン</button></li>
-          <li><button class="signup-button" onclick="logOut();">ログアウト</button></li>
+          <li><button class="signup-button" id="logut-button">ログアウト</button></li>
         </ul>
       </div>
     </div>
@@ -57,7 +57,11 @@
   </div>
 
 
-  <script type="module" src="login.js"></script>
+  <script type="module">
+    import {logOut} from "./login.js";
+
+    document.getElementById("logut-button").addEventListener('click', logOut)
+  </script>
   <script type="module">
     window.onload = async (event) => {
       const para = document.querySelector("#lifeGauge");

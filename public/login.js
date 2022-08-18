@@ -27,21 +27,25 @@ const auth = getAuth(app);
 
 
 //新規登録の処理
-function signUp() {
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
+export function signUp() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
 
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in
     const user = userCredential.user;
-    alert('登録成功しました')
+    alert('登録成功しました');
+    window.location.href= 'index.html';
     // ...
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
     alert('登録に失敗しました');
+    console.log(error);
+    console.log(errorMessage);
     // ..
   });
 }
@@ -56,7 +60,6 @@ export function logIn() {
 
   console.log('test');
 
-  // ログインを試みる
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in
@@ -69,15 +72,20 @@ export function logIn() {
     const errorCode = error.code;
     const errorMessage = error.message;
     alert('ログイン失敗');
+    console.log(errorMessage);
   });
 }
 
 //ログアウト処理
-function logOut() {
+export function logOut() {
   signOut(auth).then(() => {
     // Sign-out successful.
+    alert('ログアウトしました');
+    window.location.href= 'login-form.html';
   }).catch((error) => {
     // An error happened.
+    alert('ログアウトに失敗しました');
+    console.log(error);
   });
 }
 

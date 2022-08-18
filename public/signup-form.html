@@ -40,7 +40,7 @@
         <input type="text" class="text-input" required> -->
 
 
-        <p>年齢　<span>必須</span></p>
+        <!-- <p>年齢　<span>必須</span></p>
         <div class="cp_ipselect cp_sl01">
           <select name="age">
             <script>
@@ -50,41 +50,29 @@
             }
             </script>
           </select>
-        </div>
-        <p>性別　<span>必須</span></p>
+        </div> -->
+        <!-- <p>性別　<span>必須</span></p>
         <div class="gender-class">
           <input type="radio" name="gender" value="men"checked/>男性
         </div>
         <div class="gender-class">
           <input type="radio" name="gender" value="women"/>女性<br>
         </div>
-        <button id="sampleclick" onClick="click();">クリック</button>
+        <button id="sampleclick" onClick="click();">クリック</button> -->
 
 
         <div class="submit-button">
-          <input type="button" value="登録" class="form-signup-button" onclick="signUp();">
+          <button class="form-signup-button" id="signup-button">登録</button>
         </div>
       </form>
     </div>
   </div>
 
 
-
-  <script type="module" src="login.js"></script>
   <script type="module">
-    window.onload = async (event) => {
-      const response = await fetch("/welcome-message");
-      document.querySelector("#welcomeMessage").innerText = await response.text();
-    };
+    import {signUp} from "./login.js";
 
-    window.onload = async (event) => {
-      const response = await fetch("/life-gauge");
-      const lifeGauge = await response.text();
-
-      const para = document.querySelector("#lifeGauge");
-      para.innerText = `${lifeGauge}%`;
-    };
-
+    document.getElementById("signup-button").addEventListener('click', signUp)
   </script>
 </body>
 
