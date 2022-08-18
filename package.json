@@ -1,0 +1,23 @@
+{
+  "name": "2022-summer-1-c",
+  "version": "1.0.0",
+  "description": "main ブランチに PUSH されたら自動で Deno Deploy にデプロイされます。",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jigintern/2022-summer-1-c.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jigintern/2022-summer-1-c/issues"
+  },
+  "homepage": "https://github.com/jigintern/2022-summer-1-c#readme",
+  "dependencies": {
+    "firebase": "^8.2.9"
+  }
+}

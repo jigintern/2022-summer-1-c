@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/form.css">
+  <!-- firebaseのスクリプト -->
+  <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
 </head>
 
 <body>
@@ -28,14 +31,16 @@
         <h1>アカウント登録</h1>
         <p>基本情報を入力してください。</p>
       </div>
-      <form class="input-wrap" style="margin-left: 15%;">
-        <p>ユーザー名　<span>必須</span></p>
-        <input type="text" class="text-input"  required>
+      <div class="input-wrap" style="margin-left: 15%;">
+        <p>メールアドレス<span>必須</span></p>
+        <input type="text" id="email"  class="text-input"  required>
         <p>パスワード <span>必須</span></p>
-        <input type="text" class="text-input" required>
-        <p>パスワード（確認）<span>必須</span></p>
-        <input type="text" class="text-input" required>
-        <p>年齢　<span>必須</span></p>
+        <input type="password" id="password" class="text-input" required>
+        <!-- <p>パスワード（確認）<span>必須</span></p>
+        <input type="text" class="text-input" required> -->
+
+
+        <!-- <p>年齢　<span>必須</span></p>
         <div class="cp_ipselect cp_sl01">
           <select name="age">
             <script>
@@ -45,37 +50,29 @@
             }
             </script>
           </select>
-        </div>
-        <p>性別　<span>必須</span></p>
+        </div> -->
+        <!-- <p>性別　<span>必須</span></p>
         <div class="gender-class">
           <input type="radio" name="gender" value="men"checked/>男性
         </div>
         <div class="gender-class">
           <input type="radio" name="gender" value="women"/>女性<br>
         </div>
+        <button id="sampleclick" onClick="click();">クリック</button> -->
+
+
         <div class="submit-button">
-          <input type="submit" value="登録" class="form-signup-button">
+          <button class="form-signup-button" id="signup-button">登録</button>
         </div>
       </form>
     </div>
   </div>
 
 
-
-
   <script type="module">
-    window.onload = async (event) => {
-      const response = await fetch("/welcome-message");
-      document.querySelector("#welcomeMessage").innerText = await response.text();
-    };
+    import {signUp} from "./login.js";
 
-    window.onload = async (event) => {
-      const response = await fetch("/life-gauge");
-      const lifeGauge = await response.text();
-
-      const para = document.querySelector("#lifeGauge");
-      para.innerText = `${lifeGauge}%`;
-    };
+    document.getElementById("signup-button").addEventListener('click', signUp)
   </script>
 </body>
 
