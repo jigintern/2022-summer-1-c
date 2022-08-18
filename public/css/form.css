@@ -27,7 +27,7 @@ form {
   padding:0 16px;
 }
 
-form span {
+.input-wrap span {
   background-color: red;
   border-radius: 5px;
   line-height: 1;
@@ -35,7 +35,7 @@ form span {
   color: #ffffff;
 }
 
-form p {
+.input-wrap p {
   margin-bottom: 10px;
   font-weight: bold;
 }

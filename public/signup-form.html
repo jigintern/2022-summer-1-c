@@ -31,9 +31,9 @@
         <h1>アカウント登録</h1>
         <p>基本情報を入力してください。</p>
       </div>
-      <form class="input-wrap" style="margin-left: 15%;">
-        <p>ユーザー名　<span>必須</span></p>
-        <input type="text" id="username"  class="text-input"  required>
+      <div class="input-wrap" style="margin-left: 15%;">
+        <p>メールアドレス<span>必須</span></p>
+        <input type="text" id="email"  class="text-input"  required>
         <p>パスワード <span>必須</span></p>
         <input type="password" id="password" class="text-input" required>
         <!-- <p>パスワード（確認）<span>必須</span></p>
@@ -57,7 +57,7 @@
           <input type="radio" name="gender" value="women"/>女性<br>
         </div> -->
         <div class="submit-button">
-          <input type="button" value="登録" class="form-signup-button" onclick="signIn()">
+          <input type="button" value="登録" class="form-signup-button" onclick="signUp();">
         </div>
       </form>
     </div>
@@ -65,7 +65,7 @@
 
 
 
-
+  <script type="module" src="login.js"></script>
   <script type="module">
     window.onload = async (event) => {
       const response = await fetch("/welcome-message");
