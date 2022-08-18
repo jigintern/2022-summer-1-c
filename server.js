@@ -82,9 +82,9 @@ serve(async (req) => {
       const nowTime = new Date();                                   // 現在の時刻を入手
       if(nowTime.getMinutes() < 20){                                // 最新のアメダスデータ時刻に調整
         nowTime.setHours((new Date()).getHours() -1);
-        nowTime.setMinutes(40);
+        nowTime.setMinutes((new Date()).getMinutes()+40);
       }else{
-        nowTime.setMinutes((new Date()).getMinutes() -20);
+        nowTime.setMinutes((new Date()).getMinutes()-20);
       }
       return nowTime.getFullYear().toString()                       // 年
            + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
