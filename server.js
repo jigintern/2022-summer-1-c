@@ -31,8 +31,13 @@ serve(async (req) => {
       life -= old * (temp + humidity / 100) * 0.012 * reqCount;
     }
 
-    reqCount++;
-    return new Response(orgFloor(life));
+    if(life <= 0) {
+      return new Response(0);
+    }
+    else {
+      reqCount++;
+      return new Response(orgFloor(life));
+    }
   }
 
   return serveDir(req, {
