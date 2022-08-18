@@ -14,9 +14,10 @@
         obj = JSON.parse(obj);
         let lat = obj.lat;
         let lng = obj.lng;
+        let time = obj.time;
         var marker = L.marker([lat, lng]).addTo(mainMap);
 			  marker
-				  .bindPopup(String(lat) + " " + String(lng))
+				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
 				  .openPopup();
       }
     });
@@ -162,15 +163,17 @@
 		function success(pos) {
 			const lat = pos.coords.latitude;
 			const lng = pos.coords.longitude;
+      const time = getDate();
 
 			var marker = L.marker([lat, lng]).addTo(mainMap);
 			marker
-				.bindPopup(String(lat) + " " + String(lng))
+				.bindPopup(String(lat) + " " + String(lng) + " " + time)
 				.openPopup();
 
         var posData = {
           lat: pos.coords.latitude,
-          lng: pos.coords.longitude
+          lng: pos.coords.longitude,
+          time: time
         }
       
       sessionStorage.setItem("Pos" + String(keynum) ,JSON.stringify(posData));
@@ -189,12 +192,27 @@
 			}
     }
 
+    // マップ設定
     var mainMap = L.map("mapid").setView([35.6809591, 139.7673068],12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
     }).addTo(mainMap);
   </script>
 
+  <script>
+    function getDate() {
+      let now = new Date();
+			let year = now.getFullYear();
+			let month = now.getMonth() + 1;
+			let date = now.getDate();
+			let hour = now.getHours();
+			let min = now.getMinutes();
+			let sec = now.getSeconds();
+      let result = year + "/" + month + "/" + date + "/" + hour + "/" + min + "/" + sec;
+
+      return result;
+    }
+  </script>
 </body>
 
 </html>

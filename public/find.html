@@ -14,9 +14,10 @@
         obj = JSON.parse(obj);
         let lat = obj.lat;
         let lng = obj.lng;
+        let time = obj.time;
         var marker = L.marker([lat, lng]).addTo(mainMap);
 			  marker
-				  .bindPopup(String(lat) + " " + String(lng))
+				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
 				  .openPopup();
       }
     });
