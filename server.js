@@ -80,7 +80,7 @@ serve(async (req) => {
 
     const getNowTime = () => {
       const nowTime = new Date();                                   // 現在の時刻を入手
-      if(nowTime.getMinutes() < 10){                                // 最新のアメダスデータ時刻に調整
+      if(nowTime.getMinutes() < 20){                                // 最新のアメダスデータ時刻に調整
         nowTime.setHours((new Date()).getHours() -1);
         nowTime.setMinutes(40);
       }else{
