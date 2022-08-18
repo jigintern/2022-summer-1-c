@@ -95,7 +95,8 @@
         para.innerText = `${life}%`;
         meter.value = life;
 
-
+        // 通知が必要かチェック
+        checkLife(life);
 
         console.log(attentionNotice);
         console.log(warningNotice);
