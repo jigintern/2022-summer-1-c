@@ -48,76 +48,87 @@
     window.onload = async (event) => {
       const para = document.querySelector("#lifeGauge");
       const meter = document.querySelector("#lifeMeter");
+      // 体力値と気温、湿度の定期更新
+      const getLocation = async() => {
+        let lat,lon,accu;
+        const getCurrentPosition = () => {
+          return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+        };
+        try {
+          const position = await getCurrentPosition(); // 位置情報の取得を試行
+          console.log(position.coords);
+          lat  = position.coords.latitude;              // 緯度を取得
+          lon  = position.coords.longitude;             // 経度を取得
+          accu = position.coords.accuracy;              // その精度を取得
+        } catch(e) {
+          console.log(e);
+          lat = 40;                                     // ダミーデータ
+          lon = 140;
+          accu = 0;
+        } finally {
+          mainMap.setView([lat,lon],12);
+          const testTxt = document.querySelector("#location");
+          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
+        }
+      }
 
-      console.log("test");
+      const mainMap = L.map("mapid");
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+      }).addTo(mainMap);
 
-      var id = setInterval(async function(){
-        const response = await fetch("/life-gauge");
-        const life = await response.text();
 
+      getLocation();
+      setInterval(async() => {
+        // 気温&湿度の取得と、表示更新
+        getLocation();
+        // 現在の体力値の取得と、表示更新
+        const response_life = await fetch("/life-gauge");
+        const life = await response_life.text();
         para.innerText = `${life}%`;
         meter.value = life;
 
-        // 体力が50を切ったら通知
-        if(life < 50 && attentionNotice == 0) {
-          notifyMe("attention");
-          attentionNotice++;
-        }
-
-        // 体力が20を切ったら通知
-        if(life < 20 && warningNotice == 0) {
-          notifyMe("warning");
-          warningNotice++;
-        }
-
-        // 体力が0になったとき通知
-        if(life <= 0 && overNotice == 0) {
-          notifyMe("over");
-          overNotice++;
-        }
+        // 通知が必要かチェック
+        checkLife(life);
 
         console.log(attentionNotice);
         console.log(warningNotice);
         console.log(overNotice);
         console.log(life);
-        console.log("test");
       }, 5000);
-
-      const getCurrentPosition = () => {
-        return new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-      };
-      
-      let lat, lon, accu;
-      try{
-        const position = await getCurrentPosition();  // 位置情報の取得を試行
-        console.log(position.coords);
-        lat  = position.coords.latitude;              // 緯度を取得
-        lon  = position.coords.longitude;             // 経度を取得
-        accu = position.coords.accuracy;              // その精度を取得
-      } catch(e) {
-        console.log(e);
-        lat = 40;                                     // ダミーデータ
-        lon = 140;
-        accu = 0;
-      } finally{
-        const testTxt = document.querySelector("#location");
-        testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
-      }
-
-      var mainMap = L.map("mapid").setView([lat,lon],12);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      }).addTo(mainMap);
-      
-      var marker = L.marker([lat,lon]).addTo(mainMap);
-      marker.bindPopup("test_pop").openPopup();
     };
   </script>
 
   <!-- 体力通知 -->
   <script>
+      // 通知回数
+      let safeNotice = 0;
+      let attentionNotice = 0;
+      let warningNotice = 0;
+      let overNotice = 0;
+
+    function checkLife(value) {
+        // 体力が50を切ったら通知
+        if(value < 50 && attentionNotice == 0) {
+          notifyMe("attention");
+          attentionNotice++;
+        }
+
+        // 体力が20を切ったら通知
+        if(value < 20 && warningNotice == 0) {
+          notifyMe("warning");
+          warningNotice++;
+        }
+
+        // 体力が0になったとき通知
+        if(value <= 0 && overNotice == 0) {
+          notifyMe("over");
+          overNotice++;
+        }
+    }
+
     function notifyMe(stateName) {
       // 通知許可の確認
       Notification.requestPermission();
@@ -134,15 +145,6 @@
       }
     }
   </script>
-  
-  <!-- 通知回数 -->
-  <script>
-    let safeNotice = 0;
-    let attentionNotice = 0;
-    let warningNotice = 0;
-    let overNotice = 0;
-  </script>
-
 </body>
 
 </html>
