@@ -59,8 +59,7 @@
       const para = document.querySelector("#lifeGauge");
       const meter = document.querySelector("#lifeMeter");
 
-      console.log("test");
-
+      // 体力値を定期的に取得する
       var id = setInterval(async function(){
         const response = await fetch("/life-gauge");
         const life = await response.text();
@@ -68,29 +67,12 @@
         para.innerText = `${life}%`;
         meter.value = life;
 
-        // 体力が50を切ったら通知
-        if(life < 50 && attentionNotice == 0) {
-          notifyMe("attention");
-          attentionNotice++;
-        }
 
-        // 体力が20を切ったら通知
-        if(life < 20 && warningNotice == 0) {
-          notifyMe("warning");
-          warningNotice++;
-        }
-
-        // 体力が0になったとき通知
-        if(life <= 0 && overNotice == 0) {
-          notifyMe("over");
-          overNotice++;
-        }
 
         console.log(attentionNotice);
         console.log(warningNotice);
         console.log(overNotice);
         console.log(life);
-        console.log("test");
       }, 5000);
     };
 
@@ -134,6 +116,32 @@
 
   <!-- 体力通知 -->
   <script>
+      // 通知回数
+      let safeNotice = 0;
+      let attentionNotice = 0;
+      let warningNotice = 0;
+      let overNotice = 0;
+
+    function checkLife(value) {
+        // 体力が50を切ったら通知
+        if(value < 50 && attentionNotice == 0) {
+          notifyMe("attention");
+          attentionNotice++;
+        }
+
+        // 体力が20を切ったら通知
+        if(value < 20 && warningNotice == 0) {
+          notifyMe("warning");
+          warningNotice++;
+        }
+
+        // 体力が0になったとき通知
+        if(value <= 0 && overNotice == 0) {
+          notifyMe("over");
+          overNotice++;
+        }
+    }
+
     function notifyMe(stateName) {
       // 通知許可の確認
       Notification.requestPermission();
@@ -149,14 +157,6 @@
         const notification = new Notification("体力が0%になりました");
       }
     }
-  </script>
-
-  <!-- 通知回数 -->
-  <script>
-      let safeNotice = 0;
-      let attentionNotice = 0;
-      let warningNotice = 0;
-      let overNotice = 0;
   </script>
 </body>
 
