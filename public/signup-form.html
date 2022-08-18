@@ -38,7 +38,9 @@
         <input type="password" id="password" class="text-input" required>
         <!-- <p>パスワード（確認）<span>必須</span></p>
         <input type="text" class="text-input" required> -->
-        <!-- <p>年齢　<span>必須</span></p>
+
+
+        <p>年齢　<span>必須</span></p>
         <div class="cp_ipselect cp_sl01">
           <select name="age">
             <script>
@@ -55,7 +57,10 @@
         </div>
         <div class="gender-class">
           <input type="radio" name="gender" value="women"/>女性<br>
-        </div> -->
+        </div>
+        <button id="sampleclick" onClick="click();">クリック</button>
+
+
         <div class="submit-button">
           <input type="button" value="登録" class="form-signup-button" onclick="signUp();">
         </div>
@@ -79,6 +84,7 @@
       const para = document.querySelector("#lifeGauge");
       para.innerText = `${lifeGauge}%`;
     };
+
   </script>
 </body>
 

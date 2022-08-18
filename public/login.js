@@ -1,10 +1,11 @@
 // //firebase認証の処理
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// Auth
 import { getAuth, signInWithEmailAndPassword , createUserWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js'
 
-const auth = getAuth();
+//Firestore
+import { getFirestore,collection,addDoc  } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
 
 // TODO: Replace the following with your app's Firebase pro, ject configuration
 const firebaseConfig = {
@@ -19,6 +20,11 @@ const firebaseConfig = {
 
 //Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+const auth = getAuth(app);
+
 
 //新規登録の処理
 function signUp() {
@@ -41,15 +47,14 @@ function signUp() {
 }
 
 //ログインの処理
-function logIn() {
-  const email = document.getElementById("login-email");
-  const password = document.getElementById("login-password");
+export function logIn() {
+  let email = document.getElementById("login-email");
+  let password = document.getElementById("login-password");
 
-  console.log(email.value);
-  console.log(password.value);
+  email = email.value;
+  password = password.value;
 
-  emailValue = email.value;
-  passwordValue = password.value;
+  console.log('test');
 
   // ログインを試みる
   signInWithEmailAndPassword(auth, email, password)
@@ -57,6 +62,7 @@ function logIn() {
     // Signed in
     const user = userCredential.user;
     alert('ログイン成功');
+    window.location.href= 'index.html';
     // ...
   })
   .catch((error) => {
@@ -74,3 +80,5 @@ function logOut() {
     // An error happened.
   });
 }
+
+

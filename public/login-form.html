@@ -34,20 +34,27 @@
         <input type="text" class="text-input" id="login-password" required>
         <div class="submit-button">
           <!-- <input type="submit" value="登録"  class="form-signup-button" onClick="nextPage();"> -->
-          <button class="form-signup-button" onClick="logIn();">ログイン</button>
+          <button class="form-signup-button" id="logIn-button">ログイン</button>
         </div>
       </div>
     </div>
   </div>
 
-  <script type="module" src="login.js"></script>
-  <script type="module">
 
+
+  <script type="module">
+    import {logIn} from "./login.js";
+
+    document.getElementById("logIn-button").addEventListener('click', logIn)
+  </script>
+
+  <!-- <script type="text" src="login.js"></script> -->
+  <!-- <script type="module">
     window.onload = async (event) => {
       const response = await fetch("/welcome-message");
       document.querySelector("#welcomeMessage").innerText = await response.text();
     };
-  </script>
+  </script> -->
 </body>
 
 </html>
