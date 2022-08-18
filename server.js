@@ -99,7 +99,7 @@ serve(async (req) => {
            + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
            + nowTime.getDate().toString().padStart(2, '0')          // 日
            + nowTime.getHours().toString().padStart(2, '0')         // 時
-           + nowTime.getMinutes().toString().substring(0,1) + "0"   // 分（10分単位）
+           + nowTime.getMinutes().toString().slice(0,1) + "0"   // 分（10分単位）
            + "00";                                                  // 秒
     }
 
