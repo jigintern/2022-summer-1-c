@@ -101,12 +101,12 @@
         testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
       }
 
-      var mainMap = L.map("mapid").setView([40,140],12);
+      var mainMap = L.map("mapid").setView([lat,lon],12);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
       }).addTo(mainMap);
       
-      var marker = L.marker([40,140]).addTo(mainMap);
+      var marker = L.marker([lat,lon]).addTo(mainMap);
       marker.bindPopup("test_pop").openPopup();
     };
 
