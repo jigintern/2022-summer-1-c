@@ -28,33 +28,24 @@
         <h1>ログイン</h1>
         <p>ログイン情報を入力してください。</p>
       </div>
-      <form class="input-wrap" style="margin-left: 15%;">
-        <p>ユーザー名　<span>必須</span></p>
-        <input type="text" class="text-input"  required>
+      <div class="input-wrap" id="login-form" style="margin-left: 15%;" name="login_form">
+        <p>メールアドレス　<span>必須</span></p>
+        <input type="text" class="text-input" id="login-email" name="email" required>
         <p>パスワード <span>必須</span></p>
-        <input type="text" class="text-input" required>
+        <input type="text" class="text-input" id="login-password" required>
         <div class="submit-button">
-          <input type="submit" value="登録" class="form-signup-button">
+          <!-- <input type="submit" value="登録"  class="form-signup-button" onClick="nextPage();"> -->
+          <button class="form-signup-button" onClick="get()">ログイン</button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
-
-
-
+  <script type="text/javascript" src="login.js"></script>
   <script type="module">
     window.onload = async (event) => {
       const response = await fetch("/welcome-message");
       document.querySelector("#welcomeMessage").innerText = await response.text();
-    };
-
-    window.onload = async (event) => {
-      const response = await fetch("/life-gauge");
-      const lifeGauge = await response.text();
-
-      const para = document.querySelector("#lifeGauge");
-      para.innerText = `${lifeGauge}%`;
     };
   </script>
 </body>
