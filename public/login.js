@@ -1,4 +1,3 @@
-// //firebase認証の処理
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 
 // Auth
@@ -30,7 +29,6 @@ const auth = getAuth(app);
 export function signUp() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
-
 
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
