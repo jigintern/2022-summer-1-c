@@ -8,15 +8,16 @@ function orgFloor(value) {
   return Math.floor(value * 10) / 10;
 }
 
+// ユーザー情報
+const maxlife = 100;
+let life = 100;
+let gender = "man";
+let old = 20;
+let temp = 30;
+let humidity = 50;
+
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
-
-  const maxlife = 100;
-  let life = 100;
-  let gender = "man";
-  let old = 20;
-  let temp = 30;
-  let humidity = 50;
 
   console.log(pathname);
 
@@ -124,6 +125,8 @@ serve(async (req) => {
     if(nowInfo.temp === undefined)nowInfo.temp = [20.0, 0];
     if(nowInfo.humidity === undefined)nowInfo.humidity = [50.0, 0];
     console.log(`気象情報：${JSON.stringify(nowInfo)}`);
+    temp = nowInfo.temp[0];
+    humidity = nowInfo.humidity[0];
     return new Response(JSON.stringify(nowInfo));
   }
 
