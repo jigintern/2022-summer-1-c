@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="css/mapPage.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    window.addEventListener("load",function(){
+      for(let i = 0; i < sessionStorage.length;i++) {
+        let obj = sessionStorage.getItem("Pos"+String(i));
+        obj = JSON.parse(obj);
+        let lat = obj.lat;
+        let lng = obj.lng;
+        var marker = L.marker([lat, lng]).addTo(mainMap);
+			  marker
+				  .bindPopup(String(lat) + " " + String(lng))
+				  .openPopup();
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -105,14 +119,6 @@
         const testTxt = document.querySelector("#location");
         testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
       }
-
-      var mainMap = L.map("mapid").setView([lat,lon],12);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      }).addTo(mainMap);
-      
-      var marker = L.marker([lat,lon]).addTo(mainMap);
-      marker.bindPopup("test_pop").openPopup();
     };
   </script>
   <!-- 体力通知 -->
@@ -139,6 +145,16 @@
       let attentionNotice = 0;
       let warningNotice = 0;
       let overNotice = 0;
+  </script>
+  <script>
+    function _(id) {
+      return document.getElementById(id);
+    }
+
+    var mainMap = L.map("mapid").setView([35.6809591, 139.7673068],12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+    }).addTo(mainMap);
   </script>
 </body>
 
