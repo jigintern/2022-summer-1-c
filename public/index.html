@@ -60,8 +60,7 @@
       const meter = document.querySelector("#lifeMeter");
 
       // 体力値と気温、湿度の定期更新
-      var id = setInterval(async function(){
-        // 気温&湿度の取得と、表示更新
+      const getLocation = async() => {
         let lat,lon,accu;
         const getCurrentPosition = () => {
           return new Promise((resolve, reject) => {
@@ -75,25 +74,31 @@
           lon  = position.coords.longitude;             // 経度を取得
           accu = position.coords.accuracy;              // その精度を取得
         } catch(e) {
-        console.log(e);
-        lat = 40;                                     // ダミーデータ
-        lon = 140;
-        accu = 0;
-      } finally{
-        const testTxt = document.querySelector("#location");
-        testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
-
-        const response_weather = await fetch("/temp-humid", {             // server.jsに位置情報を送信
-          method: "POST",
-          headers: { "Content-Type" : "application/json" },
-          body: JSON.stringify({"lat": lat ,"lon": lon})
-        });
-        const nowInfo = await response_weather.json();                    // 位置情報を元に得た気象情報を受け取る
-        const temp = document.querySelector("#nowTemp");
-        temp.innerText = `${nowInfo.temp[0]}℃`;
-        const humidity = document.querySelector("#nowHumidity");
-        humidity.innerText = `${nowInfo.humidity[0]}%`;
+          console.log(e);
+          lat = 40;                                     // ダミーデータ
+          lon = 140;
+          accu = 0;
+        } finally {
+          const testTxt = document.querySelector("#location");
+          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
+          const response_weather = await fetch("/temp-humid", {             // server.jsに位置情報を送信
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({"lat": lat ,"lon": lon})
+          });
+          const nowInfo = await response_weather.json();                    // 位置情報を元に得た気象情報を受け取る
+          const temp = document.querySelector("#nowTemp");
+          temp.innerText = `${nowInfo.temp[0]}℃`;
+          const humidity = document.querySelector("#nowHumidity");
+          humidity.innerText = `${nowInfo.humidity[0]}%`;
+          return 
+        }
       }
+
+      getLocation();
+      setInterval(async() => {
+        // 気温&湿度の取得と、表示更新
+        getLocation();
         // 現在の体力値の取得と、表示更新
         const response_life = await fetch("/life-gauge");
         const life = await response_life.text();
