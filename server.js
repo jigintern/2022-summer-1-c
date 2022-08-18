@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
-let reqCount = 1;
-
 // 任意の桁で切り捨て
 function orgFloor(value) {
   return Math.floor(value * 10) / 10;
@@ -23,20 +21,19 @@ serve(async (req) => {
 
   if (req.method === "GET" && pathname === "/life-gauge") {
     if (gender == "man") {
-      life -= old * (temp + humidity / 100) * 0.01 * reqCount;
+      life -= old * (temp + humidity / 100) * 0.01;
     }
     else if (gender == "woman") {
-      life -= old * (temp + humidity / 100) * 0.015 * reqCount;
+      life -= old * (temp + humidity / 100) * 0.015;
     }
     else if (gender == "other") {
-      life -= old * (temp + humidity / 100) * 0.012 * reqCount;
+      life -= old * (temp + humidity / 100) * 0.012;
     }
 
     if(life <= 0) {
       return new Response(0);
     }
     else {
-      reqCount++;
       return new Response(orgFloor(life));
     }
   }
