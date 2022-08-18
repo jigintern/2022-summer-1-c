@@ -108,7 +108,7 @@
       }
     };
   </script>
-
+  
   <!-- 体力通知 -->
   <script>
     function notifyMe(stateName) {
@@ -138,6 +138,9 @@
 
   <!-- 自販機座標の登録 -->
   <script>
+
+    let keynum = 0;
+
     function _(id) {
 			return document.getElementById(id);
 		}
@@ -150,6 +153,9 @@
 			marker
 				.bindPopup(String(lat) + " " + String(lng))
 				.openPopup();
+      
+      sessionStorage.setItem("Pos" + String(keynum) ,pos);
+      keynum++;
 		}
 		// 失敗
 		function fail(pos) {
