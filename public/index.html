@@ -109,31 +109,21 @@
         // 気温&湿度の取得と、表示更新
         getLocation();
         // 現在の体力値の取得と、表示更新
-        const response_life = await fetch("/life-gauge",{
-          method: "POST",
-          body: life
-        });
-        const rlife = await response_life.text();
-        para.innerText = `${rlife}%`;
-        meter.value = rlife;
-
-        life = rlife;
+        const response_life = await fetch("/life-gauge");
+        const life = await response_life.text();
+        para.innerText = `${life}%`;
+        meter.value = life;
 
         // 通知が必要かチェック
-        checkLife(rlife);
+        checkLife(life);
 
         console.log(attentionNotice);
         console.log(warningNotice);
         console.log(overNotice);
-        console.log(rlife);
+        console.log(life);
       }, 5000);
     };
 
-  </script>
-  <script>
-    // ユーザー情報
-    const maxlife = 100;
-    let life = 100;
   </script>
 
   <!-- 体力通知 -->

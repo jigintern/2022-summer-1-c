@@ -105,7 +105,7 @@ export function logIn() {
     // Signed in
     const user = userCredential.user;
     alert('ログイン成功');
-    window.location.href= 'index.html';
+    // window.location.href= 'index.html';
     const userinfo = auth.currentUser;
     console.log(userinfo.email);
 
