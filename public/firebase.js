@@ -24,6 +24,25 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 
+function getEmailFromStore(email) {
+  return email;
+}
+
+function getPasswordFromStore(password) {
+  return password;
+}
+
+// firebase.js
+const email = getEmailFromStore();
+const password = getPasswordFromStore();
+if( email === null  || password === null) {
+  signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+    console.log(auth)
+    console.log(auth.currentUser)
+    console.log(auth.currentUser.email())
+  })
+}
+
 
 //新規登録の処理
 export function signUp() {
@@ -37,6 +56,11 @@ export function signUp() {
     alert('登録成功しました');
     window.location.href= 'info-form.html';
 
+    const userinfo = auth.currentUser;
+    console.log(userinfo.email);
+
+    getEmailFromStore(userinfo.email);
+    getPasswordFromStore(userinfo.password);
     // ...
     //
   })
@@ -85,6 +109,8 @@ export function logIn() {
     const userinfo = auth.currentUser;
     console.log(userinfo.email);
 
+    getEmailFromStore(user.email);
+    getPasswordFromStore(user.password);
     // ...
     //
 
