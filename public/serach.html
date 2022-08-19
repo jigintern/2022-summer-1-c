@@ -7,28 +7,13 @@
   <link rel="stylesheet" href="css/mapPage.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    window.addEventListener("load",function(){
-      for(let i = 0; i < sessionStorage.length;i++) {
-        let obj = sessionStorage.getItem("Pos"+String(i));
-        obj = JSON.parse(obj);
-        let lat = obj.lat;
-        let lng = obj.lng;
-        let time = obj.time;
-        var marker = L.marker([lat, lng]).addTo(mainMap);
-			  marker
-				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
-				  .openPopup();
-      }
-    });
-  </script>
 </head>
 
 <body>
   <header>
     <div class="header-wrap">
       <div class="header-title">
-        <p><a href="index.html">水分補給チェッカー</a></p>
+        <p><a href="index.html">Hydration Checker Quest</a></p>
       </div>
       <div class="header-menu">
         <ul class="menu-ul">
@@ -57,8 +42,7 @@
     </div>
     <div class="content-wrap">
       <h1>自動販売機を探す</h1>
-      <div id="mapid" style="width: 600px;height: 600px;" class="locationmap"></div>
-      <button type="button" onclick="registPos();">とうろく</button>
+      <div id="mapid" style="width: 600px;height: 600px;"></div>
     </div>
   </div>
   <script type="module">
@@ -122,9 +106,17 @@
         const testTxt = document.querySelector("#location");
         testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
       }
+
+      var mainMap = L.map("mapid").setView([lat,lon],12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+      }).addTo(mainMap);
+
+      var marker = L.marker([lat,lon]).addTo(mainMap);
+      marker.bindPopup("test_pop").openPopup();
     };
   </script>
-  
+
   <!-- 体力通知 -->
   <script>
     function notifyMe(stateName) {
@@ -152,68 +144,6 @@
     let overNotice = 0;
   </script>
 
-  <!-- 自販機座標の登録 -->
-  <script>
-
-    let keynum = 0;
-
-    function _(id) {
-			return document.getElementById(id);
-		}
-		// 成功
-		function success(pos) {
-			const lat = pos.coords.latitude;
-			const lng = pos.coords.longitude;
-      const time = getDate();
-
-			var marker = L.marker([lat, lng]).addTo(mainMap);
-			marker
-				.bindPopup(String(lat) + " " + String(lng) + " " + time)
-				.openPopup();
-
-        var posData = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-          time: time
-        }
-      
-      sessionStorage.setItem("Pos" + String(keynum) ,JSON.stringify(posData));
-      keynum++;
-		}
-		// 失敗
-		function fail(pos) {
-			alert("位置情報の取得に失敗しました。エラーコード：" + pos);
-		}
-
-    function registPos() {
-      try {
-				navigator.geolocation.getCurrentPosition(success, fail);
-			} catch (e) {
-				alert("お使いのブラウザは対応していません。");
-			}
-    }
-
-    // マップ設定
-    var mainMap = L.map("mapid").setView([35.6809591, 139.7673068],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-    }).addTo(mainMap);
-  </script>
-
-  <script>
-    function getDate() {
-      let now = new Date();
-			let year = now.getFullYear();
-			let month = now.getMonth() + 1;
-			let date = now.getDate();
-			let hour = now.getHours();
-			let min = now.getMinutes();
-			let sec = now.getSeconds();
-      let result = year + "/" + month + "/" + date + "/" + hour + "/" + min + "/" + sec;
-
-      return result;
-    }
-  </script>
 </body>
 
 </html>

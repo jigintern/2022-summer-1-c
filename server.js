@@ -1,6 +1,11 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
+let gender = "man";
+let old = 20;
+let temp = 30;
+let humidity = 50;
+
 // 任意の桁で切り捨て
 function orgFloor(value) {
   return Math.floor(value * 10) / 10;
@@ -17,20 +22,19 @@ function calcDistance(lat1, lon1, lat2, lon2) {
   return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lon1-lon2)) );
 }
 
-// ユーザー情報
-const maxlife = 100;
-let life = maxlife;
-let gender = "man";
-let old = 20;
-let temp = 30;
-let humidity = 50;
+
+
 
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
 
   console.log(pathname);
 
-  if (req.method === "GET" && pathname === "/life-gauge") {
+  if (req.method === "POST" && pathname === "/life-gauge") {
+    
+    const requestText = await req.text();
+    let life = parseInt(requestText);
+    
     if (gender == "man") {
       life -= old * (temp + humidity / 100) * 0.01;
     }
@@ -89,15 +93,15 @@ serve(async (req) => {
       const nowTime = new Date();                                   // 現在の時刻を入手
       if(nowTime.getMinutes() < 20){                                // 最新のアメダスデータ時刻に調整
         nowTime.setHours((new Date()).getHours() -1);
-        nowTime.setMinutes((new Date()).getMinutes()+40);
+        nowTime.setMinutes((new Date()).getMinutes()/10+4);
       }else{
-        nowTime.setMinutes((new Date()).getMinutes()-20);
+        nowTime.setMinutes((new Date()).getMinutes()/10-2);
       }
       return nowTime.getFullYear().toString()                       // 年
            + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
            + nowTime.getDate().toString().padStart(2, '0')          // 日
            + nowTime.getHours().toString().padStart(2, '0')         // 時
-           + nowTime.getMinutes().toString().slice(0,1) + "0"   // 分（10分単位）
+           + nowTime.getMinutes().toString() + "0"                  // 分（10分単位）
            + "00";                                                  // 秒
     }
 

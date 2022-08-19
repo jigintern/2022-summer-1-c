@@ -10,7 +10,7 @@
   <header>
     <div class="header-wrap">
       <div class="header-title">
-        <p><a href="index.html">水分補給チェッカー</a></p>
+        <p><a href="index.html">Hydration Checker Quest</a></p>
       </div>
       <div class="header-menu">
         <ul class="menu-ul menu-login">
@@ -43,9 +43,9 @@
 
 
   <script type="module">
-    import {logIn} from "./login.js";
+    import {logIn} from "./firebase.js";
 
-    //login.jsからログインボタンが押されたときにlogIn()を呼び出す
+    //firebase.jsからログインボタンが押されたときにlogIn()を呼び出す
     document.getElementById("logIn-button").addEventListener('click', logIn)
   </script>
 </body>
