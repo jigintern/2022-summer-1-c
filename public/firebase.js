@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 
 // Auth
-import { getAuth, signInWithEmailAndPassword , createUserWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword , setPersistence,createUserWithEmailAndPassword, signOut,browserSessionPersistence} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js';
 
 //Firestore
 import { getFirestore,collection,addDoc} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore-lite.js';
@@ -30,23 +30,47 @@ export function signUp() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    alert('登録成功しました');
-    window.location.href= 'index.html';
+  // createUserWithEmailAndPassword(auth, email, password)
+  // .then((userCredential) => {
+  //   // Signed in
+  //   const user = userCredential.user;
+  //   alert('登録成功しました');
+  //   window.location.href= 'info-form.html';
+
+  //   // ...
+  //   //
+  // })
+  // .catch((error) => {
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   alert('登録に失敗しました');
+  //   console.log(error);
+  //   console.log(errorMessage);
+  //   // ..
+  // });
+
+  setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
     // ...
+    // New sign-in will be persisted with session persistence.
+    alert('登録成功しました');
+    return signInWithEmailAndPassword(auth, email, password);
+
   })
   .catch((error) => {
+    // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
-    alert('登録に失敗しました');
-    console.log(error);
-    console.log(errorMessage);
-    // ..
   });
 }
+
+//確認
+const user = auth.currentUser;
+console.log(user)
+
 
 //ログインの処理
 export function logIn() {
@@ -63,8 +87,13 @@ export function logIn() {
     // Signed in
     const user = userCredential.user;
     alert('ログイン成功');
-    window.location.href= 'index.html';
+    // window.location.href= 'index.html';
+    const userinfo = auth.currentUser;
+    console.log(userinfo.email);
+
     // ...
+    //
+
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -91,38 +120,38 @@ export function logOut() {
 // const colRef = collection(db, "users");
 // const newUserInfo = doc(colRef); // ドキュメント名の引数がないので、ランダムなIDが振られる
 
-// let username = document.getElementById('username').value;
-// let age = document.getElementById('age');
-// const idx = age.selectedIndex;
-// const ageValue = age.options[idx].value;
-// let gender = document.getElementByName('gender');
-
-// for (var i = 0; i <  gender.length; i++) {
-//   if (gender[i].checked) {
-//     console.log(gender[i].value);
-//     break;
-//   }
-// }
-
 //プロフィール情報追加処理
 export async function addInfo() {
+  let username = document.getElementById('username').value;
+  let age = document.getElementById('age');
+  const idx = age.selectedIndex;
+  const ageValue = age.options[idx].value;
+  let gender = document.getElementsByName('gender');
+
+  for (var i = 0; i <  gender.length; i++) {
+    if (gender[i].checked) {
+      console.log(gender[i].value);
+      break;
+    }
+  }
+
+  //データベースに保存する処理
   try {
     const docRef = await addDoc(collection(db, "users"), {
-      age: 13,
-      gender: "man",
-      username: "ひろし"
+      age: ageValue,
+      gender: gender[i].value,
+      username: username
     });
     console.log("ドキュメントID ", docRef.id);
+    console.log("データの保存が成功しました");
+    alert('プロフィール情報を登録しました');
+    window.location.href= 'index.html';
   } catch (e) {
     console.error("エラーメッセージ: ", e);
   }
 
-  // const data = {
-  //   age: 13,
-  //   gender: "man",
-  //   username: "ひろし"
-  // };
-
-  //データを追加
-  // await addDoc(colRef, data);
+  console.log(username);
+  console.log(ageValue);
+  console.log(gender[i].value);
 }
+
