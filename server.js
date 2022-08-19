@@ -8,6 +8,18 @@ function orgFloor(value) {
   return Math.floor(value * 10) / 10;
 }
 
+// 距離計算
+function calcDistance(lat1, lon1, lat2, lon2) {
+  const r = 6371000;  // 地球半径
+  const toRadian = Math.PI / 180;
+  lat1 *= toRadian;
+  lon1 *= toRadian;
+  lat2 *= toRadian;
+  lon2 *= toRadian;
+  return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lon1-lon2)) );
+}
+
+
 // ユーザー情報
 const maxlife = 100;
 let life = maxlife;
@@ -15,6 +27,8 @@ let gender = "man";
 let old = 20;
 let temp = 30;
 let humidity = 50;
+
+let x = true;
 
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
@@ -63,22 +77,11 @@ serve(async (req) => {
       return json;
     }
 
-    // 球面2点間の距離を求める（https://ja.wikipedia.org/wiki/大円距離 参照）
-    const distance = (lat1, lon1, lat2, lon2) => {
-      const r = 6371000;  // 地球半径
-      const toRadian = Math.PI / 180;
-      lat1 *= toRadian;
-      lon1 *= toRadian;
-      lat2 *= toRadian;
-      lon2 *= toRadian;
-      return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lon1-lon2)) );
-    }
-
     const getNearistID = (lat, lon, json) => {
       let nearistDistance = 6371000 * Math.PI;                        // 球面2点間の最大距離を初期値に
       let checkObs, nearistID;
       Object.keys(json).map( key => {                                 // 要約：各観測地点に対して距離を出している
-        checkObs = distance(lat, lon, json[key].lat, json[key].lon);
+        checkObs = calcDistance(lat, lon, json[key].lat, json[key].lon);
         if(nearistDistance > checkObs){
           nearistDistance = checkObs;
           nearistID = key;
