@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
-let reqCount = 1;
-
 // 任意の桁で切り捨て
 function orgFloor(value) {
   return Math.floor(value * 10) / 10;
@@ -19,7 +17,6 @@ function calcDistance(lat1, lon1, lat2, lon2) {
   return r * Math.acos( Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(Math.abs(lon1-lon2)) );
 }
 
-
 // ユーザー情報
 const maxlife = 100;
 let life = maxlife;
@@ -27,8 +24,6 @@ let gender = "man";
 let old = 20;
 let temp = 30;
 let humidity = 50;
-
-let x = true;
 
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
