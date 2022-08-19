@@ -100,22 +100,30 @@
         marker.bindPopup("現在位置").openPopup();
 
         // 現在の体力値の取得と、表示更新
-        const response_life = await fetch("/life-gauge");
-        const life = await response_life.text();
-        para.innerText = `${life}%`;
-        meter.value = life;
+        const response_life = await fetch("/life-gauge",{
+          method: "POST",
+          body: life
+        });
+        const rlife = await response_life.text();
+        para.innerText = `${rlife}%`;
+        meter.value = rlife;
+
+        life = rlife;
 
         // 通知が必要かチェック
-        checkLife(life);
-
-        console.log(attentionNotice);
-        console.log(warningNotice);
-        console.log(overNotice);
-        console.log(life);
+        checkLife(rlife);
       }, 5000);
     };
 
   </script>
+
+  <script>
+    // ユーザー情報
+    const maxlife = 100;
+    let life = 100;
+  </script>
+
+
   <!-- 体力通知 -->
   <script>
     // 通知回数

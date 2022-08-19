@@ -109,6 +109,8 @@
         // 気温&湿度の取得と、表示更新
         getLocation();
         // 現在の体力値の取得と、表示更新
+
+        
         const response_life = await fetch("/life-gauge",{
           method: "POST",
           body: life
@@ -122,9 +124,6 @@
         // 通知が必要かチェック
         checkLife(rlife);
 
-        console.log(attentionNotice);
-        console.log(warningNotice);
-        console.log(overNotice);
         console.log(rlife);
       }, 5000);
     };
