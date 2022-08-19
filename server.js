@@ -10,7 +10,7 @@ function orgFloor(value) {
 
 // ユーザー情報
 const maxlife = 100;
-let life = 100;
+let life = maxlife;
 let gender = "man";
 let old = 20;
 let temp = 30;

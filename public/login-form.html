@@ -45,16 +45,9 @@
   <script type="module">
     import {logIn} from "./login.js";
 
+    //login.jsからログインボタンが押されたときにlogIn()を呼び出す
     document.getElementById("logIn-button").addEventListener('click', logIn)
   </script>
-
-  <!-- <script type="text" src="login.js"></script> -->
-  <!-- <script type="module">
-    window.onload = async (event) => {
-      const response = await fetch("/welcome-message");
-      document.querySelector("#welcomeMessage").innerText = await response.text();
-    };
-  </script> -->
 </body>
 
 </html>
