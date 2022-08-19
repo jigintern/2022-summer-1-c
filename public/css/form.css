@@ -32,6 +32,7 @@ form {
   border-radius: 5px;
   line-height: 1;
   padding: 3px 5px;
+  margin-left: 5px;
   color: #ffffff;
 }
 
@@ -49,6 +50,7 @@ form {
   height: 40px;
   border-radius: 100px;
   margin-top: 40px;
+  margin-right: 35px;
 }
 
 .gender-class {

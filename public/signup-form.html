@@ -32,9 +32,9 @@
         <p>基本情報を入力してください。</p>
       </div>
       <div class="input-wrap" style="margin-left: 15%;">
-        <p>メールアドレス<span>必須</span></p>
+        <p>メールアドレス  <span>必須</span></p>
         <input type="text" id="email"  class="text-input"  required>
-        <p>パスワード <span>必須</span></p>
+        <p>パスワード  <span>必須</span></p>
         <input type="password" id="password" class="text-input" required>
         <!-- <p>パスワード（確認）<span>必須</span></p>
         <input type="text" class="text-input" required> -->
@@ -72,6 +72,7 @@
   <script type="module">
     import {signUp} from "./login.js";
 
+    //login.jsから登録ボタンが押されたときにsignUp()を呼び出す
     document.getElementById("signup-button").addEventListener('click', signUp)
   </script>
 </body>
