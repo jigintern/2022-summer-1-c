@@ -83,7 +83,7 @@
       var marker = L.marker([location.lat, location.lon]).addTo(mainMap);
       marker.bindPopup("現在位置(読み込み時)").openPopup();
 
-      setInterval(async() => {
+      var id = setInterval(async() => {
         // 気温&湿度の取得と、表示更新
         location = await getLocation();
         mainMap.removeLayer(marker);
