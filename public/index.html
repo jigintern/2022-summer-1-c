@@ -27,7 +27,6 @@
     </div>
   </header>
   <div class="container">
-   <p id="location">経度・緯度</p>
    <div class="guage-wrap">
     <h1>体力ゲージ</h1>
     <div class="guage">
@@ -89,8 +88,8 @@
           lon = 140;
           accu = 0;
         } finally {
-          const testTxt = document.querySelector("#location");
-          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
+          /*const testTxt = document.querySelector("#location");
+          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;*/
           const response_weather = await fetch("/temp-humid", {             // server.jsに位置情報を送信
             method: "POST",
             headers: { "Content-Type" : "application/json" },

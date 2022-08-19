@@ -7,21 +7,6 @@
   <link rel="stylesheet" href="css/mapPage.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    window.addEventListener("load",function(){
-      for(let i = 0; i < sessionStorage.length;i++) {
-        let obj = sessionStorage.getItem("Pos"+String(i));
-        obj = JSON.parse(obj);
-        let lat = obj.lat;
-        let lng = obj.lng;
-        let time = obj.time;
-        var marker = L.marker([lat, lng]).addTo(mainMap);
-			  marker
-				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
-				  .openPopup();
-      }
-    });
-  </script>
 </head>
 
 <body>
@@ -83,8 +68,8 @@
           lon = 140;
           accu = 0;
         } finally {
-          const testTxt = document.querySelector("#location");
-          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;
+          /*const testTxt = document.querySelector("#location");
+          testTxt.innerHTML = `経度：${lat}<br>緯度：${lon}<br>`;*/
           return {"lat":lat,"lon":lon};
         }
       }
@@ -94,15 +79,26 @@
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
       }).addTo(mainMap);
+      for(let i = 0; i < sessionStorage.length;i++) {
+        let obj = sessionStorage.getItem("Pos"+String(i));
+        obj = JSON.parse(obj);
+        let lat = obj.lat;
+        let lng = obj.lng;
+        let time = obj.time;
+        var marker = L.marker([lat, lng]).addTo(mainMap);
+			  marker
+				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
+				  .openPopup();
+      }
       var marker = L.marker([location.lat, location.lon]).addTo(mainMap);
-      marker.bindPopup("現在位置(読み込み時)").openPopup();
+      marker.bindPopup("現在位置").openPopup();
 
       setInterval(async() => {
         // 気温&湿度の取得と、表示更新
         location = await getLocation();
         mainMap.removeLayer(marker);
         marker = L.marker([location.lat, location.lon]).addTo(mainMap);
-        marker.bindPopup("現在位置(定期更新時)").openPopup();
+        marker.bindPopup("現在位置").openPopup();
 
         // 現在の体力値の取得と、表示更新
         const response_life = await fetch("/life-gauge");
@@ -165,14 +161,6 @@
     }
   }
 </script>
-
-  <!-- 通知回数 -->
-  <script>
-      let safeNotice = 0;
-      let attentionNotice = 0;
-      let warningNotice = 0;
-      let overNotice = 0;
-  </script>
 </body>
 
 </html>
