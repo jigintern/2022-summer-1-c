@@ -10,6 +10,7 @@ function orgFloor(value) {
 
 // ユーザー情報
 const maxlife = 100;
+let life = maxlife;
 let gender = "man";
 let old = 20;
 let temp = 30;
@@ -17,8 +18,6 @@ let humidity = 50;
 
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
-
-  let life = maxlife;
 
   console.log(pathname);
 
