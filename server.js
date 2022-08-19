@@ -94,15 +94,15 @@ serve(async (req) => {
       const nowTime = new Date();                                   // 現在の時刻を入手
       if(nowTime.getMinutes() < 20){                                // 最新のアメダスデータ時刻に調整
         nowTime.setHours((new Date()).getHours() -1);
-        nowTime.setMinutes((new Date()).getMinutes()+40);
+        nowTime.setMinutes((new Date()).getMinutes()/10+4);
       }else{
-        nowTime.setMinutes((new Date()).getMinutes()-20);
+        nowTime.setMinutes((new Date()).getMinutes()/10-2);
       }
       return nowTime.getFullYear().toString()                       // 年
            + (nowTime.getMonth() + 1).toString().padStart(2, '0')   // 月
            + nowTime.getDate().toString().padStart(2, '0')          // 日
            + nowTime.getHours().toString().padStart(2, '0')         // 時
-           + nowTime.getMinutes().toString().slice(0,1) + "0"   // 分（10分単位）
+           + nowTime.getMinutes().toString() + "0"                  // 分（10分単位）
            + "00";                                                  // 秒
     }
 
