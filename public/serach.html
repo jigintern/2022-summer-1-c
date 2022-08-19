@@ -97,15 +97,15 @@
 				  .openPopup();
       }
 
-      //var marker = L.marker([location.lat, location.lon]).addTo(mainMap);
-      //marker.bindPopup("現在位置").openPopup();
+      var marker = L.marker([location.lat, location.lon]).addTo(mainMap);
+      marker.bindPopup("現在位置").openPopup();
 
       var id = setInterval(async() => {
         // 気温&湿度の取得と、表示更新
         location = await getLocation();
-        //mainMap.removeLayer(marker);
-        //marker = L.marker([location.lat, location.lon]).addTo(mainMap);
-        //marker.bindPopup("現在位置").openPopup();
+        mainMap.removeLayer(marker);
+        marker = L.marker([location.lat, location.lon]).addTo(mainMap);
+        marker.bindPopup("現在位置").openPopup();
 
         // 現在の体力値の取得と、表示更新
         const response_life = await fetch("/life-gauge");
