@@ -33,7 +33,7 @@
       <div class="header-menu">
         <ul class="menu-ul">
           <li><a href="profile.html">プロフィール</a></li>
-          <li><a href="serach.html">探す</a></li>
+          <li><a href="serach.html">クエスト</a></li>
           <li><a href="find.html">見つける</a></li>
         </ul>
         <ul class="menu-ul menu-login">
@@ -97,13 +97,12 @@
         console.log(life);
         console.log("test");
       }, 5000);
-
       const getCurrentPosition = () => {
         return new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
       };
-      
+
       let lat, lon, accu;
       try{
         const position = await getCurrentPosition();  // 位置情報の取得を試行

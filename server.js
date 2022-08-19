@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 
+let reqCount = 1;
+
 // 任意の桁で切り捨て
 function orgFloor(value) {
   return Math.floor(value * 10) / 10;
@@ -117,7 +119,7 @@ serve(async (req) => {
     console.log(`観測所地名：${amedasObs[nearistID].kjName}`);
     const nowTime = getNowTime();
     const amedasInfo = await fetchAmedasInfo(nowTime);
-    const nowInfo = { "temp": amedasInfo[nearistID].temp, 
+    const nowInfo = { "temp": amedasInfo[nearistID].temp,
                       "humidity": amedasInfo[nearistID].humidity};
     if(nowInfo.temp === undefined)nowInfo.temp = [20.0, 0];
     if(nowInfo.humidity === undefined)nowInfo.humidity = [50.0, 0];
