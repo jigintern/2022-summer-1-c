@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="css/mapPage.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    window.addEventListener("load",function(){
+      for(let i = 0; i < sessionStorage.length;i++) {
+        let obj = sessionStorage.getItem("Pos"+String(i));
+        obj = JSON.parse(obj);
+        let lat = obj.lat;
+        let lng = obj.lng;
+        let time = obj.time;
+        var marker = L.marker([lat, lng]).addTo(mainMap);
+			  marker
+				  .bindPopup(String(lat) + " " + String(lng) + " " + time)
+				  .openPopup();
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -150,6 +165,14 @@
     }
   }
 </script>
+
+  <!-- 通知回数 -->
+  <script>
+      let safeNotice = 0;
+      let attentionNotice = 0;
+      let warningNotice = 0;
+      let overNotice = 0;
+  </script>
 </body>
 
 </html>
