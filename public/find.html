@@ -41,15 +41,13 @@
     </div>
     <div class="content-wrap">
       <h1>自動販売機を見つけよう！</h1>
-      <div id="mapid" style="width: 600px;height: 600px;"></div>
+      <div id="mapid" style="width: 100%;height: 1000px;"></div>
     </div>
   </div>
   <script type="module">
     window.onload = async (event) => {
       const para = document.querySelector("#lifeGauge");
       const meter = document.querySelector("#lifeMeter");
-
-
 
       const getLocation = async() => {
         let lat,lon,accu;
@@ -77,9 +75,20 @@
       }
       
       let location = await getLocation();
+      const mainMap = L.map("mapid").setView([location.lat, location.lon], 18);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+      }).addTo(mainMap);
+      var marker = L.marker([location.lat, location.lon]).addTo(mainMap);
+      marker.bindPopup("現在位置(読み込み時)").openPopup();
+
       setInterval(async() => {
         // 気温&湿度の取得と、表示更新
         location = await getLocation();
+        mainMap.removeLayer(marker);
+        marker = L.marker([location.lat, location.lon]).addTo(mainMap);
+        marker.bindPopup("現在位置(定期更新時)").openPopup();
+
         // 現在の体力値の取得と、表示更新
         const response_life = await fetch("/life-gauge");
         const life = await response_life.text();
@@ -94,14 +103,6 @@
         console.log(overNotice);
         console.log(life);
       }, 5000);
-
-      const mainMap = L.map("mapid").setView([location.lat, location.lon], 18);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      }).addTo(mainMap);
-
-      const marker = L.marker([location.lat, location.lon]).addTo(mainMap);
-      marker.bindPopup("現在位置(読み込み時)").openPopup();
     };
 
   </script>
