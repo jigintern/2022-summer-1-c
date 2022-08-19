@@ -10,7 +10,7 @@ function orgFloor(value) {
 
 // ユーザー情報
 const maxlife = 100;
-let life = 100;
+let life = maxlife;
 let gender = "man";
 let old = 20;
 let temp = 30;
@@ -33,9 +33,11 @@ serve(async (req) => {
     }
 
     if(life <= 0) {
+      console.log("体力が０になったよ"+ life);
       return new Response(0);
     }
     else {
+      console.log("いまの体力は..." + life);
       return new Response(orgFloor(life));
     }
   }
