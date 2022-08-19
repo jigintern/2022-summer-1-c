@@ -21,6 +21,7 @@
         <ul class="menu-ul menu-login">
           <li><button class="signup-button" onclick="location.href='signup-form.html'">新規登録</button></li>
           <li><button class="login-button" onclick="location.href='login-form.html'">ログイン</button></li>
+          <li><button class="login-button" onclick="location.href='info-form.html'">情報入力</button></li>
           <li><button class="signup-button" id="logut-button">ログアウト</button></li>
         </ul>
       </div>
@@ -58,9 +59,9 @@
 
 
   <script type="module">
-    import {logOut} from "./login.js";
+    import {logOut} from "./firebase.js";
     document.getElementById("logut-button").addEventListener('click', logOut);
-    //login.jsから登録ボタンが押されたときにlogOut()を呼び出す
+    //firebase.jsから登録ボタンが押されたときにlogOut()を呼び出す
   </script>
 
 

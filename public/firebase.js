@@ -1,10 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 
 // Auth
-import { getAuth, signInWithEmailAndPassword , createUserWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js'
+import { getAuth, signInWithEmailAndPassword , createUserWithEmailAndPassword, signOut} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js';
 
 //Firestore
-import { getFirestore,collection,addDoc  } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
+import { getFirestore,collection,addDoc} from 'https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore-lite.js';
 
 // TODO: Replace the following with your app's Firebase pro, ject configuration
 const firebaseConfig = {
@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 //Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Initialize Cloud Firestore and get a reference to the service
+// 接続情報を変数dbに格納
 const db = getFirestore(app);
 
 const auth = getAuth(app);
@@ -87,4 +87,42 @@ export function logOut() {
   });
 }
 
+//コレクションへの参照
+// const colRef = collection(db, "users");
+// const newUserInfo = doc(colRef); // ドキュメント名の引数がないので、ランダムなIDが振られる
 
+// let username = document.getElementById('username').value;
+// let age = document.getElementById('age');
+// const idx = age.selectedIndex;
+// const ageValue = age.options[idx].value;
+// let gender = document.getElementByName('gender');
+
+// for (var i = 0; i <  gender.length; i++) {
+//   if (gender[i].checked) {
+//     console.log(gender[i].value);
+//     break;
+//   }
+// }
+
+//プロフィール情報追加処理
+export async function addInfo() {
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      age: 13,
+      gender: "man",
+      username: "ひろし"
+    });
+    console.log("ドキュメントID ", docRef.id);
+  } catch (e) {
+    console.error("エラーメッセージ: ", e);
+  }
+
+  // const data = {
+  //   age: 13,
+  //   gender: "man",
+  //   username: "ひろし"
+  // };
+
+  //データを追加
+  // await addDoc(colRef, data);
+}

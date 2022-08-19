@@ -28,21 +28,16 @@
   <div class="container">
     <div class="form-wrap">
       <div class="form-title">
-        <h1>アカウント登録</h1>
+        <h1>プロフィール</h1>
         <p>基本情報を入力してください。</p>
       </div>
       <div class="input-wrap" style="margin-left: 15%;">
-        <p>メールアドレス  <span>必須</span></p>
-        <input type="text" id="email"  class="text-input"  required>
-        <p>パスワード  <span>必須</span></p>
-        <input type="password" id="password" class="text-input" required>
-        <!-- <p>パスワード（確認）<span>必須</span></p>
-        <input type="text" class="text-input" required> -->
 
-
-        <!-- <p>年齢　<span>必須</span></p>
+      <p>ユーザーネーム<span>必須</span></p>
+      <input type="text" class="text-input" id="username" required>
+    <p>年齢　<span>必須</span></p>
         <div class="cp_ipselect cp_sl01">
-          <select name="age">
+          <select name="age" id="age">
             <script>
             var i;
             for(i=5; i<100; i++){
@@ -50,19 +45,17 @@
             }
             </script>
           </select>
-        </div> -->
-        <!-- <p>性別　<span>必須</span></p>
+        </div>
+        <p>性別　<span>必須</span></p>
         <div class="gender-class">
-          <input type="radio" name="gender" value="men"checked/>男性
+          <input type="radio" name="gender" value="men"  checked/>男性
         </div>
         <div class="gender-class">
           <input type="radio" name="gender" value="women"/>女性<br>
         </div>
-        <button id="sampleclick" onClick="click();">クリック</button> -->
-
 
         <div class="submit-button">
-          <button class="form-signup-button" id="signup-button">登録</button>
+          <button class="form-signup-button" id="info-button">登録</button>
         </div>
       </form>
     </div>
@@ -70,10 +63,10 @@
 
 
   <script type="module">
-    import {signUp} from "./firebase.js";
+    import {addInfo} from "./firebase.js";
 
-    //firebase.jsから登録ボタンが押されたときにsignUp()を呼び出す
-    document.getElementById("signup-button").addEventListener('click', signUp)
+
+    document.getElementById("info-button").addEventListener('click', addInfo);
   </script>
 </body>
 
