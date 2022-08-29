@@ -81,9 +81,10 @@
       let location = await getLocation();
       mainMap = L.map("mapid").setView([location.lat, location.lon], 18);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      }).addTo(mainMap);
+      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+    }).addTo(mainMap);
+
 
       for(let i = 0; i < sessionStorage.length;i++) {
         let obj = sessionStorage.getItem("Pos"+String(i));
@@ -119,7 +120,7 @@
         life = rlife;
 
         // 通知が必要かチェック
-        checkLife(rife);
+        checkLife(rlife);
       }, 5000);
     };
     // 通知回数
@@ -161,16 +162,7 @@
     else if(stateName === "over") {
       const notification = new Notification("体力が0%になりました");
     }
-  }
-
-    
-
-    // マップ設定
-    /*var mainMap = L.map("mapid").setView([35.6809591, 139.7673068],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-    }).addTo(mainMap);*/
-    
+  } 
     </script>
     <script>
       // ユーザー情報
