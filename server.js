@@ -21,21 +21,21 @@ function calcDistance(lat1, lon1, lat2, lon2) {
 
 
 // ユーザー情報
-const maxlife = 100;
-let life = maxlife;
 let gender = "man";
 let old = 20;
 let temp = 30;
 let humidity = 50;
-
-let x = true;
 
 serve(async (req) => {
   const pathname = new URL(req.url).pathname;
 
   console.log(pathname);
 
-  if (req.method === "GET" && pathname === "/life-gauge") {
+  if (req.method === "POST" && pathname === "/life-gauge") {
+
+    const requestText = await req.text();
+    let life = parseInt(requestText);
+
     if (gender == "man") {
       life -= old * (temp + humidity / 100) * 0.01;
     }
